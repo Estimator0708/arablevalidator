@@ -37,7 +37,7 @@ app.get('/sdk/lp-token-price/:pair', (req, resp) => {
     })
     .catch(err => {
       console.log(err.message)
-      resp.send('Failed to load LP token price for ' + reqPair)
+      resp.send('Failed to load LP token price for ' + pair + '\n')
     })
 })
 
