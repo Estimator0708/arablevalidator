@@ -19,16 +19,12 @@ async function collect_raydium() {
         response[keyMapping[pair.name.toUpperCase()]] = pair;
     })
 
-    return response;
-
     // on-chain version
-    // const raySol = await raydium.getLpPoolPrice('RAY-SOL')
-    // const rayUsdt = await raydium.getLpPoolPrice('RAY-USDT')
-    // return {
-        // apiPairs,
-        // raySol,
-        // rayUsdt,
-    // }
+    for (let i = 0; i < pairs.length; i++) {
+        let pair = pairs[i]
+        response[keyMapping[pair]].lpPoolPriceChain = await raydium.getLpPoolPrice(pair)
+    }
+    return response
 }
 
 exports.collect_raydium = collect_raydium;

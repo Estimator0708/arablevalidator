@@ -24,11 +24,16 @@ const getMainnetRaydiumPools = async () => {
 
 exports.getLpPoolPrice = (pair) => {
     pair = pair.toUpperCase()
-    let lpTokens = Object.values(MAINNET_LP_TOKENS).filter(lp => lp.symbol == pair).sort((lp1, lp2) => lp2.version.compareTo(lp1.version))
+    let lpTokens = Object.values(MAINNET_LP_TOKENS).filter(lp => lp.symbol == pair).sort((lp1, lp2) => {
+      if (lp1.version > lp2.version) return -1
+      else if (lp1.version < lp2.version) return 1
+      else return 0
+    })
     if (lpTokens.length == 0) {
       throw pair + ' not found'
     }
     let lpToken = lpTokens[0]
+    //console.log('lpToken: ' + JSON.stringify(lpToken, null, 2))
     let liquidityPool = MAINNET_LIQUIDITY_POOLS.filter((lp) => lp.lp == lpToken)[0]
     console.log('Computing LP Pool Price for ' + pair)
     
