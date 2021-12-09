@@ -17,7 +17,7 @@ const usdcPriceFeedAddress = '0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7'
 const ethPriceFeedAddress = '0xF9680D99D6C9589e2a93a78A04A279e509205945'
 const rewardAddress = '0xbB703E95348424FF9e94fbE4FB524f6d280331B8'
 
-async function quickSwap_eth_usdc_collector(){
+async function quickswap_eth_usdc_collector(){
   try { 
     const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`)
     //const mainFarmContract = new web3.eth.Contract(mainFarm_abi,mainFarmAddress)
