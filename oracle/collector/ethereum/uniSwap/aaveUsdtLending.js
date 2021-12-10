@@ -1,8 +1,6 @@
 const Web3 = require('web3');
 const aaveLending_abi = require('./abis/aaveLending_abi')
-require('dotenv').config()
-
-
+//address
 const usdtAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7'
 const lendingPool = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9'
 
@@ -14,7 +12,7 @@ async function aaveLending_usdt(){
         const currentLendingRate = await lendingdata[3]/1e25
         const stableBorrowRate = await lendingdata.currentStableBorrowRate/1e25
         const variedBorrowRate = await lendingdata.currentVariableBorrowRate/1e25
-        console.log('lending rate: ' + currentLendingRate + '%, Stable borrow rate: ' + stableBorrowRate +'%, Varied borrow rate: ' +variedBorrowRate + '%')
+        //console.log('lending rate: ' + currentLendingRate + '%, Stable borrow rate: ' + stableBorrowRate +'%, Varied borrow rate: ' +variedBorrowRate + '%')
         
         return{
             currentLendingRate,

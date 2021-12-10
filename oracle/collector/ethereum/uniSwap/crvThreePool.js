@@ -1,7 +1,6 @@
 const Web3 = require('web3');
 const totalGauage_abi = require('./abis/totalGauage_abi')
 const gauageThreePool_abi = require('./abis/gauageThreePool_abi');
-require('dotenv').config()
 
 //address
 const totalGauageAddress = '0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB'
@@ -21,7 +20,7 @@ async function crv_three_pool(){
         const curveInflation = await threePoolContract.methods.inflation_rate().call()
         const curveMintedPerSecond = curveInflation/1e18
         const threePoolReward = (curveMintedPerSecond * threePoolWeightPercent)/percent
-        console.log(`3 pool rate: ${threePoolWeightPercent} %. ${curveMintedPerSecond} CRV is getting minted per second. ${threePoolReward} CRV getting rewarded to a 3 Pool.`)
+       // console.log(`3 pool rate: ${threePoolWeightPercent} %. ${curveMintedPerSecond} CRV is getting minted per second. ${threePoolReward} CRV getting rewarded to a 3 Pool.`)
 
         return{
             curveMintedPerSecond,

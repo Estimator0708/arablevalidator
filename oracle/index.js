@@ -1,4 +1,5 @@
 const { collect } = require('./collector');
+require('dotenv').config()
 
 async function main() {
     const data = await collect();

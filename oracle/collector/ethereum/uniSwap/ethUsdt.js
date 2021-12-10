@@ -4,7 +4,6 @@ const eth_abi = require('./abis/eth_abi')
 const usdt_abi = require('./abis/usdt_abi')
 const priceUsdt_abi = require ('./abis/priceUsdt_abi')
 const priceEth_abi = require('./abis/priceEth_abi')
-require('dotenv').config()
 
 //address
 const contractAddress= '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852'
@@ -27,18 +26,18 @@ async function uniSwap_weth_usdt_collector () {
         const usdtPriceRoundAnswer = await usdtPriceRoundData.answer
         const usdtPriceDecimals = await priceUsdtContract.methods.decimals().call()
         const usdtPrice = await usdtPriceRoundAnswer/Math.pow(10,usdtPriceDecimals)
-        console.log('USDT current price: ' + usdtPrice)
+        //console.log('USDT current price: ' + usdtPrice)
         //live price of eth
         const ethPriceRoundData = await priceEthContract.methods.latestRoundData().call()
         const ethPriceRoundAnswer = await ethPriceRoundData.answer
         const ethPriceDecimals = await priceEthContract.methods.decimals().call()
         const ethPrice = await ethPriceRoundAnswer/Math.pow(10,ethPriceDecimals)
-        console.log('ETH current price: ' + ethPrice)
+        //console.log('ETH current price: ' + ethPrice)
         //checking supply of the pool
         const totalSupplyPool = await poolContract.methods.totalSupply().call()
         const totalSupplyDecimals = await poolContract.methods.decimals().call()
         const totalSupply = await totalSupplyPool/Math.pow(10,totalSupplyDecimals)
-        console.log('Total Supply of the pool: ' + totalSupply)
+        //console.log('Total Supply of the pool: ' + totalSupply)
         //getting total number of eth and usdt
         const ethDecimals = await ethContract.methods.decimals().call()
         const usdtDecimals = await usdtContract.methods.decimals().call()
@@ -47,9 +46,8 @@ async function uniSwap_weth_usdt_collector () {
         const totalUsdt = await reserves[1]/Math.pow(10, usdtDecimals)
         //calculating total liquidity
         const totalLiquidity = totalEth*ethPrice + totalUsdt* usdtPrice
-        console.log('Total liquidty of the pool:  ' + totalLiquidity)
         const lpTokenPrice = totalLiquidity/totalSupply
-        console.log('LP token price: ' + lpTokenPrice)
+       // console.log(`Eth price ${ethPrice}, Usdt price ${usdtPrice},LP token price:  ${lpTokenPrice}, `)
 
         return{
             ethPrice,
