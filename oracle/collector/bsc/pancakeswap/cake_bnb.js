@@ -22,40 +22,30 @@ async function pancakswap_cake_bnb_collector() {
     const priceCakeContract = new web3.eth.Contract(priceFeedCake_abi, priceFeedCakeAddress)
     const mainFarmContract = new web3.eth.Contract(mainFarmContract_abi, mainFarmAddress)
     const priceBNBContract = new web3.eth.Contract(priceFeedBNB_abi, priceFeedBNBAddress)
-
     //live price Of bnb
     const bnbPriceRoundData = await priceBNBContract.methods.latestRoundData().call()
     const bnbPriceRoundAnswer = await bnbPriceRoundData.answer
     const bnbPriceDecimals = await priceBNBContract.methods.decimals().call()
     const bnbPrice = await bnbPriceRoundAnswer/Math.pow(10,bnbPriceDecimals)
-    console.log('BNB current price: ' + bnbPrice)
-
     //live Price of cake 
     const cakePriceRoundData = await priceCakeContract.methods.latestRoundData().call()
     const cakePriceRoundAnswer = await cakePriceRoundData.answer
     const cakePriceDecimals = await priceCakeContract.methods.decimals().call()
     const cakePrice = await cakePriceRoundAnswer/Math.pow(10,cakePriceDecimals)
-    console.log('Cake current price: ' + cakePrice)
-
     //total supply of the pool
     const totalSupplyPool = await poolContract.methods.totalSupply().call()
     const totalSupplyDecimals = await poolContract.methods.decimals().call()
     const totalSupply = await totalSupplyPool/Math.pow(10,totalSupplyDecimals)
-    console.log('Total Supply of the pool: ' + totalSupply)
-
     // Getting total number of cake and bnb in pool
     const tokenOneDecimals= await tokenOneContract.methods.decimals().call()
     const tokenTwoDecimals = await tokenTwoContract.methods.decimals().call()
     const reserves = await poolContract.methods.getReserves().call()
     const totalTokenOne = await reserves[0]/Math.pow(10, tokenOneDecimals)
     const totalTokenTwo = await reserves[1]/Math.pow(10, tokenTwoDecimals)
-
     //calculating total liquidity
     const totalLiquidity = totalTokenOne*cakePrice + totalTokenTwo* bnbPrice
-    console.log('Total liquidty of the pool:  ' + totalLiquidity)
+    //console.log('Total liquidty of the pool:  ' + totalLiquidity)
     const lpTokenPrice = totalLiquidity/totalSupply
-    console.log('LP token price: ' + lpTokenPrice)
-
     //Reward mechanism
     const poolInfo = await mainFarmContract.methods.poolInfo(251).call()
     const poolAllocation = await poolInfo.allocPoint 
@@ -63,8 +53,7 @@ async function pancakswap_cake_bnb_collector() {
     const rewardsPerBlock = await mainFarmContract.methods.cakePerBlock().call()
     const cakeEmissionPerBlock = rewardsPerBlock/1e18
     const poolRewardsPerBlock =(poolAllocation/totalAllocPoint)*cakeEmissionPerBlock
-    console.log('Total allocation: ' + totalAllocPoint + '. Cake/BNB pool allocation: '
-    + poolAllocation + '. Total Cake emission per block: ' + cakeEmissionPerBlock + '. Cake allocated to Cake/BNB pool: ' + poolRewardsPerBlock)
+    //console.log(`BNB price ${bnbPrice}. Cake price: ${cakePrice}. Cake allocated to Cake/BNB pool ${poolRewardsPerBlock}. LP token Price ${lpTokenPrice}`)
 
     return {
         bnbPrice,
