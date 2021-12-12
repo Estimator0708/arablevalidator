@@ -9,20 +9,21 @@ async function collect() {
     const solana = await collect_solana();
     const eth = await collect_eth();
     const poly = await collect_polygon();
+    const coingecko = await cronPriceJob()
   
     return {
         bsc,
         solana,
         eth,
         poly,
+        coingecko,
     }
 }
- async function coingeckoPrice(){
-     const coingecko = await cronPriceJob()
-     return{
-         coingecko,
-     }
- }
-
+//  async function coingeckoPrice(){
+     
+//      return{
+         
+//      }
+//  }
+// exports.coingeckoPrice = coingeckoPrice;
 exports.collect = collect;
-exports.coingeckoPrice = coingeckoPrice;
