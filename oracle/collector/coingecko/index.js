@@ -1,9 +1,9 @@
 const {priceFeed} = require('./priceScript');
 
-async function cronPriceJob(){
-    const priceJob = await priceFeed();
-    return{
-        priceJob,
+async function coingecko_prices(){
+    const prices = await priceFeed();
+    return {
+        prices,
     }
 }
-exports.cronPriceJob = cronPriceJob;
+exports.coingecko_prices = coingecko_prices;
