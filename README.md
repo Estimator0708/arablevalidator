@@ -6,7 +6,8 @@
 
 ## Execute the script
 
-`node oracle/index.js`
+Setup `.env` at `oracle` directory by referencing `env.example`.
+Then execute `node oracle/index.js`
 
 ## How to ensure the security of oracle script
 
