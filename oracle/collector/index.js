@@ -19,11 +19,4 @@ async function collect() {
         coingecko,
     }
 }
-//  async function coingeckoPrice(){
-     
-//      return{
-         
-//      }
-//  }
-// exports.coingeckoPrice = coingeckoPrice;
 exports.collect = collect;

@@ -1,5 +1,12 @@
-async function main() {
-    console.log('Oracle information submitter, implement it!');
+const {feedingPrice} = require('./tokenData')
+//require('dotenv').config()
+
+async function onChainPriceFeed() {
+    const onChainPrice = await feedingPrice()
+
+    return{
+        onChainPrice,
+    }
 }
 
-main();
+exports.onChainPriceFeed = onChainPriceFeed
