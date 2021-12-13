@@ -6,7 +6,7 @@ require('dotenv').config()
 async function main() {
     
     //All scripts will run first second of first minute every hour
-    await nodeCron.schedule(" * * * * *",async function(){
+    await nodeCron.schedule(" 1 * * * *",async function(){
         const data = await collect();
         const onChainPrice = await onChainPriceFeed()
         console.log('collection', JSON.stringify(data, null, '\t'));
