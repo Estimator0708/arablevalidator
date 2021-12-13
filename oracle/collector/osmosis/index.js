@@ -40,34 +40,41 @@ async function collect_osmosis() {
     const incentivizedPools = await axios.get('https://lcd-osmosis.keplr.app/osmosis/pool-incentives/v1beta1/incentivized_pools').then(res =>
         res.data.incentivized_pools.filter(ip => ip.pool_id == poolId)
     )
-    
-    const duration1day = '86400s'
-    const duration14days = '1209600s'
-    const gaugeId = incentivizedPools.filter(ip => ip.lockable_duration == duration1day)[0].gauge_id
-    const potWeight = distrInfo.records.filter(r => r.gauge_id == gaugeId)[0].weight
-
     const mintParams = await axios.get('https://lcd-osmosis.keplr.app/osmosis/mint/v1beta1/params').then(res => res.data.params)
-    const mintPrice = osmoPrice
-    const epochIdentifier = mintParams.epoch_identifier
-
     const epochs = await axios.get('https://lcd-osmosis.keplr.app/osmosis/epochs/v1beta1/epochs').then(res => res.data.epochs)
-    const epoch = epochs.filter(e => e.identifier == epochIdentifier)[0]
-    const epochDuration = dayjs.duration(parseInt(epoch.duration.replace('s', '')) * 1000);
-
     const epochProvision = await axios.get('https://lcd-osmosis.keplr.app/osmosis/mint/v1beta1/epoch_provisions').then(res => res.data.epoch_provisions)
-    const numEpochPerYear = dayjs.duration({years: 1,}).asMilliseconds() / epochDuration.asMilliseconds()
+    
+    // lockable durations: https://lcd-osmosis.keplr.app/osmosis/pool-incentives/v1beta1/lockable_durations
+    const rewardApr1day = computeApr('86400s')
+    const rewardApr7days = computeApr('604800s') + rewardApr1day
+    const rewardApr14days = computeApr('1209600s') + rewardApr7days
 
-    const yearProvision = epochProvision * numEpochPerYear
-    const yearProvisionToPots = yearProvision * mintParams.distribution_proportions.pool_incentives
-    const yearProvisionToPot = yearProvisionToPots * (potWeight / totalWeight)
-    const yearProvisionToPotPrice = mintPrice * yearProvisionToPot / 10**6
-
-    const rewardApr = yearProvisionToPotPrice / poolTotalValueLocked
     return {
         atomOsmoLpTokenTotalValueLockedUsd: poolTotalValueLocked,
         atomOsmoLpTokenPrice: lpTokenPrice,
-        atomOsmoLpTokenRewardApr: rewardApr,
-        atomOsmoLpTokenRewardAprPct: (100.0*rewardApr).toFixed(2) + '%'
+        atomOsmoLpTokenReward14DaysBondedApr: rewardApr14days,
+        atomOsmoLpTokenReward14DaysBondedAprPct: (100.0*rewardApr14days).toFixed(2) + '%'
+    }
+
+    function computeApr(duration) {
+        const gaugeId = incentivizedPools.filter(ip => ip.lockable_duration == duration)[0].gauge_id
+        const potWeight = distrInfo.records.filter(r => r.gauge_id == gaugeId)[0].weight
+
+        const mintPrice = osmoPrice
+        const epochIdentifier = mintParams.epoch_identifier
+
+        const epoch = epochs.filter(e => e.identifier == epochIdentifier)[0]
+        const epochDuration = dayjs.duration(parseInt(epoch.duration.replace('s', '')) * 1000)
+
+        const numEpochPerYear = dayjs.duration({ years: 1, }).asMilliseconds() / epochDuration.asMilliseconds()
+
+        const yearProvision = epochProvision * numEpochPerYear
+        const yearProvisionToPots = yearProvision * mintParams.distribution_proportions.pool_incentives
+        const yearProvisionToPot = yearProvisionToPots * (potWeight / totalWeight)
+        const yearProvisionToPotPrice = mintPrice * yearProvisionToPot / 10 ** 6
+
+        const rewardApr = yearProvisionToPotPrice / poolTotalValueLocked
+        return rewardApr
     }
 }
 
