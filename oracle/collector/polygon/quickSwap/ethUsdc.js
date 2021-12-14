@@ -1,28 +1,16 @@
 const Web3 = require('web3');
-const stakingLP_abi = require('./abis/stakingLpEthUsdc_abi')
-const usdc_abi = require('./abis/usdc_abi')
-const eth_abi = require('./abis/eth_abi')
-const priceEth_abi = require('./abis/priceEth_abi')
-const priceUsdc_abi = require ('./abis/priceUsdc_abi')
-const reward_abi = require('./abis/reward_abi')
-
-//address
-const stakingLPAddress = '0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d'
-const usdcAddress = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
-const ethAddress = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
-const usdcPriceFeedAddress = '0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7'
-const ethPriceFeedAddress = '0xF9680D99D6C9589e2a93a78A04A279e509205945'
-const rewardAddress = '0xbB703E95348424FF9e94fbE4FB524f6d280331B8'
+const {polyUsdc_abi, polyEth_abi, polyPriceEth_abi, polyPriceUsdc_abi, polyEthUsdcReward_abi, stakingLpEthUsdc_abi } = require('../../libs/abis');
+const {ethUsdcPolyStakingLPAddress, usdcPolyAddress, ethPolyAddress, usdcPolyPriceFeedAddress, ethPolyPriceFeedAddress, polyRewardAddress} = require('../../libs/address');
 
 async function quickswap_eth_usdc_collector(){
   try { 
     const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY_POLY}`)
-    const poolContract = new web3.eth.Contract(stakingLP_abi,stakingLPAddress)
-    const usdcContract = new web3.eth.Contract(usdc_abi,usdcAddress);
-    const ethContract = new web3.eth.Contract(eth_abi,ethAddress);
-    const priceUsdcContract = new web3.eth.Contract(priceUsdc_abi,usdcPriceFeedAddress);
-    const priceEthContract = new web3.eth.Contract(priceEth_abi,ethPriceFeedAddress);
-    const rewardContract = new web3.eth.Contract(reward_abi, rewardAddress)
+    const poolContract = new web3.eth.Contract(stakingLpEthUsdc_abi,ethUsdcPolyStakingLPAddress)
+    const usdcContract = new web3.eth.Contract(polyUsdc_abi,usdcPolyAddress);
+    const ethContract = new web3.eth.Contract(polyEth_abi,ethPolyAddress);
+    const priceUsdcContract = new web3.eth.Contract(polyPriceUsdc_abi,usdcPolyPriceFeedAddress);
+    const priceEthContract = new web3.eth.Contract(polyPriceEth_abi,ethPolyPriceFeedAddress);
+    const rewardContract = new web3.eth.Contract(polyEthUsdcReward_abi, polyRewardAddress)
     //live price of eth
     const ethPriceRoundData = await priceEthContract.methods.latestRoundData().call()
     const ethPriceRoundAnswer = await ethPriceRoundData.answer

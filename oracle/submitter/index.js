@@ -1,8 +1,8 @@
-const {feedingPrice} = require('./tokenData')
+const {feedingPrice} = require('./collectingPrice/tokenData')
 //require('dotenv').config()
-
-async function onChainPriceFeed() {
-    const onChainPrice = await feedingPrice()
+//priceFeed is an array
+async function onChainPriceFeed(priceFeed) {
+    const onChainPrice = await feedingPrice(priceFeed)
 
     return{
         onChainPrice,

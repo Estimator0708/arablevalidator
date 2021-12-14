@@ -1,10 +1,6 @@
 const Web3 = require('web3');
-const totalGauage_abi = require('./abis/totalGauage_abi')
-const gauageThreePool_abi = require('./abis/gauageThreePool_abi');
-
-//address
-const totalGauageAddress = '0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB'
-const gaugeAddress = '0xbFcF63294aD7105dEa65aA58F8AE5BE2D9d0952A'
+const {totalGauageAddress, gaugeAddress} = require('../../libs/address');
+const {gauageThreePool_abi, totalGauage_abi  } = require('../../libs/abis');
 const percent =100
 
 async function crv_three_pool(){
@@ -28,6 +24,7 @@ async function crv_three_pool(){
         }
     }
     catch(error){
+        console.log(error)
     }
 }
 exports.crv_three_pool = crv_three_pool;

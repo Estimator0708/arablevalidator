@@ -27,6 +27,7 @@
     const arSushiswapETHTRU = "0x7cf174d140E1cDaa723aF57D2f46Bd01e0aA9C29";
 
     exports.oracle = oracle;
+    exports.arUSD = arUSD;
     exports.arBNB = arBNB;
     exports.arCAKE = arCAKE;
     exports.arPancakeswapBUSDBNB = arPancakeswapBUSDBNB;
@@ -39,3 +40,12 @@
     exports.arRAY = arRAY;
     exports.arDOT = arDOT;
     exports.arTRU = arTRU;
+    exports.arOsmosisATOMOSMO = arOsmosisATOMOSMO;
+    exports.arQuickswapETHUSDC = arQuickswapETHUSDC;
+    exports.arQuickswapETHQUICK = arQuickswapETHQUICK;
+    exports.arRaydiumRAYSOL = arRaydiumRAYSOL;
+    exports.arRaydiumRAYUSDT =arRaydiumRAYUSDT;
+    exports.arUniswapETHUSDT = arUniswapETHUSDT;
+    exports.arCurveDAIUSDCUSDT= arCurveDAIUSDCUSDT;
+    exports.arSushiswapETHTRU =arSushiswapETHTRU;
+    
