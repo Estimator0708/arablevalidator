@@ -1,10 +1,9 @@
 const { collect } = require('./collector');
 const {onChainPriceFeed} = require('./submitter')
 const nodeCron = require("node-cron");
-require('dotenv').config()
+require("dotenv").config();
 
-async function main() {
-    
+async function main() {    
     //All scripts will run first second of first minute every hour
     await nodeCron.schedule(" 1 * * * *",async function(){
         const data = await collect();
