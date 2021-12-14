@@ -25,5 +25,4 @@ async function collect() {
     terra,
   };
 }
-
 exports.collect = collect;
