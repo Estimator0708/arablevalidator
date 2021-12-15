@@ -1,12 +1,13 @@
 const Web3 = require('web3');
+const {eth_url} = require('../../../config/config.rpc')
 const {eth_abi, usdt_abi, priceUsdt_abi, priceEth_abi, ethUsdt_abi  } = require('../../libs/abis');
 const {calculateLpTokenPrice} = require('../../utils/calculatingLpTokenPrice')
 const {ethUsdtAddress, ethAddress, usdtAddress, priceFeedUsdtAddress, priceFeedEthAddress} = require('../../libs/address');
+const web3 = new Web3(eth_url)
 
 async function uniSwap_weth_usdt_collector () {
     try
         {
-        const web3 = new Web3(`https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`)
         const poolContract = new web3.eth.Contract(ethUsdt_abi, ethUsdtAddress)
         const ethContract = new web3.eth.Contract(eth_abi, ethAddress)
         const usdtContract = new web3.eth.Contract(usdt_abi, usdtAddress)

@@ -1,10 +1,11 @@
 const Web3 = require('web3');
+const {eth_url} = require('../../../config/config.rpc')
 const { aaveLending_abi } = require('../../libs/abis');
 const { lendingPool, usdtAddress } = require('../../libs/address');
+const web3 = new Web3(eth_url)
 
 async function aaveLending_usdt(){
     try{
-        const web3 = new Web3(`https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`)
         const poolContract = new web3.eth.Contract(aaveLending_abi, lendingPool)
         const lendingdata = await poolContract.methods.getReserveData(usdtAddress).call()
         const currentLendingRate = await lendingdata[3]/1e25

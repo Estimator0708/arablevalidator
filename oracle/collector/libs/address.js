@@ -34,6 +34,8 @@ const ethTruMasterContractAddress = '0xEF0881eC094552b2e128Cf945EF17a6752B4Ec5d'
 const priceFeedUsdtAddress = '0x3e7d1eab13ad0104d2750b8863b489d65364e32d'
 const priceFeedEthAddress = '0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419'
 const priceFeedTruAddress = '0x26929b85fe284eeab939831002e1928183a10fb1'
+const priceFeedCrvAddress = '0xcd627aa160a6fa45eb793d19ef54f5062f20f33f'
+
 
 //CRV address
 const totalGauageAddress = '0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB'
@@ -61,10 +63,9 @@ const usdcPolyPriceFeedAddress = '0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7'
 const ethPolyPriceFeedAddress = '0xF9680D99D6C9589e2a93a78A04A279e509205945'
 const quickPriceFeedAddress = '0xa058689f4bCa95208bba3F265674AE95dED75B6D'
 
-
-
-
 /**POLYGON address - finish */
+
+exports.priceFeedCrvAddress = priceFeedCrvAddress;
 exports.quickPolyAddress = quickPolyAddress;
 exports.quickEthpTokenAddress = quickEthpTokenAddress;
 exports.quickEthRewardAddress = quickEthRewardAddress;

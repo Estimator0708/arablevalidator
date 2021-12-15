@@ -1,10 +1,11 @@
 const Web3 = require('web3');
+const {poly_url} = require('../../../config/config.rpc')
 const {polyUsdc_abi, polyEth_abi, polyPriceEth_abi, polyPriceUsdc_abi, polyEthUsdcReward_abi, stakingLpEthUsdc_abi } = require('../../libs/abis');
 const {ethUsdcPolyStakingLPAddress, usdcPolyAddress, ethPolyAddress, usdcPolyPriceFeedAddress, ethPolyPriceFeedAddress, polyRewardAddress} = require('../../libs/address');
-
+const web3 = new Web3(poly_url)
 async function quickswap_eth_usdc_collector(){
   try { 
-    const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY_POLY}`)
+    //const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY_POLY}`)
     const poolContract = new web3.eth.Contract(stakingLpEthUsdc_abi,ethUsdcPolyStakingLPAddress)
     const usdcContract = new web3.eth.Contract(polyUsdc_abi,usdcPolyAddress);
     const ethContract = new web3.eth.Contract(polyEth_abi,ethPolyAddress);

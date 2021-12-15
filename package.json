@@ -4,7 +4,6 @@
     "@project-serum/serum": "^0.13.60",
     "@raydium-io/raydium-sdk": "^1.0.1-beta.1",
     "@solana/web3.js": "^1.31.0",
-    "@terra-money/terra.js": "^3.0.1",
     "axios": "^0.24.0",
     "coingecko-api": "^1.0.10",
     "dayjs": "^1.10.7",

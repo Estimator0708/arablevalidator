@@ -4,7 +4,7 @@ const { collect_solana } = require("./solana");
 const { collect_eth } = require("./ethereum");
 const { collect_polygon } = require("./polygon");
 const { coingecko_prices } = require("./coingecko");
-const { collect_terra } = require("./terra");
+//const { collect_terra } = require("./terra");
 
 async function collect() {
   const bsc = await collect_bsc();
@@ -13,7 +13,7 @@ async function collect() {
   const eth = await collect_eth();
   const poly = await collect_polygon();
   const coingecko = await coingecko_prices();
-  const terra = await collect_terra();
+  //const terra = await collect_terra();
 
   return {
     bsc,
@@ -22,7 +22,7 @@ async function collect() {
     eth,
     poly,
     coingecko,
-    terra,
+    //terra,
   };
 }
 exports.collect = collect;

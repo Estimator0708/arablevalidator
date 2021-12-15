@@ -1,12 +1,13 @@
 const Web3 = require('web3');
+const {eth_url} = require('../../../config/config.rpc')
 const {eth_abi, tru_abi, priceTru_abi, priceEth_abi, ethTru_abi, ethTruMasterContract_abi, truPoolReward_abi} = require('../../libs/abis');
 const {calculateLpTokenPrice} = require('../../utils/calculatingLpTokenPrice')
 const {truRewardAddress, ethAddress, truAddress, priceFeedTruAddress, priceFeedEthAddress, 
     ethTruAddress, ethTruMasterContractAddress} = require('../../libs/address');
+const web3 = new Web3(eth_url);
 
 async function uniSwap_eth_tru_collector() {
     try{
-        const web3 = new Web3(`https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`)
         const truPoolContract = new web3.eth.Contract(truPoolReward_abi, truRewardAddress)
         const masterContract = new web3.eth.Contract(ethTruMasterContract_abi, ethTruMasterContractAddress)
         const poolContract = new web3.eth.Contract(ethTru_abi, ethTruAddress)

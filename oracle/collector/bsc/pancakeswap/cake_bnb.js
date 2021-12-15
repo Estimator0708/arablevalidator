@@ -1,10 +1,11 @@
 const Web3 = require('web3');
+const {bsc_url} = require('../../../config/config.rpc')
 const {cake_abi, bnb_abi, cakePrice_abi, bnbPrice_abi, cakeBNB_abi, mainFarmContract_abi  } = require('../../libs/abis');
 const {panCakeFarmAddress, cakeBnbAddress, cakeAddress, bnbAddress, priceFeedBNBAddress, priceFeedCakeAddress } = require('../../libs/address');
 const {calculateLpTokenPrice} = require('../../utils/calculatingLpTokenPrice')
+const web3 = new Web3(bsc_url);
 async function pancakswap_cake_bnb_collector() {
     try{
-        const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
         const poolContract = new web3.eth.Contract(cakeBNB_abi,cakeBnbAddress);
         const cakeContract = new web3.eth.Contract(cake_abi,cakeAddress);
         const bnbContract = new web3.eth.Contract(bnb_abi,bnbAddress);
