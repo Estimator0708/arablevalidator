@@ -2,7 +2,24 @@
 
 ## Install dependencies
 
+Install node
+
+```
+node -v
+v16.13.0
+```
+
+Install packages
 `npm install`
+
+## Script flow
+
+Script has `collector` engine that collects information and put on state.
+In the future, this state should be agreed by multiple validators on off-chain.
+For changed state, it should be sumitted by `submitter` engine.
+
+`collector` and `submitter` engines should work separately and should not depend on each other.
+State is the way `collector` and `submitter` engines are connected each other.
 
 ## Execute the script
 
