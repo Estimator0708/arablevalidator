@@ -1,27 +1,16 @@
 const Web3 = require('web3');
-const contract_abi = require('./abis/ethTru_abi')
-const tru_abi = require('./abis/tru_abi')
-const eth_abi = require('./abis/eth_abi')
-const priceTru_abi = require('./abis/priceTru_abi')
-const priceEth_abi = require('./abis/priceEth_abi')
-const masterContract_abi = require('./abis/masterContract_abi')
-const truPoolReward_abi = require('./abis/truPoolReward_abi')
-
-//address
-const truRewardAddress = '0xD69BEEcA5Ff117eF87D94B58Ec0E96B5a74A078b'
-const masterContractAddress = '0xEF0881eC094552b2e128Cf945EF17a6752B4Ec5d'
-const contractAddress = '0xfCEAAf9792139BF714a694f868A215493461446D'
-const ethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-const truAddress = '0x4C19596f5aAfF459fA38B0f7eD92F11AE6543784'
-const priceFeedTruAddress = '0x26929b85fe284eeab939831002e1928183a10fb1'
-const priceFeedEthAddress = '0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419'
+const {eth_url} = require('../../../config/config.rpc')
+const {eth_abi, tru_abi, priceTru_abi, priceEth_abi, ethTru_abi, ethTruMasterContract_abi, truPoolReward_abi} = require('../../libs/abis');
+const {calculateLpTokenPrice} = require('../../utils/calculatingLpTokenPrice')
+const {truRewardAddress, ethAddress, truAddress, priceFeedTruAddress, priceFeedEthAddress, 
+    ethTruAddress, ethTruMasterContractAddress} = require('../../libs/address');
+const web3 = new Web3(eth_url);
 
 async function uniSwap_eth_tru_collector() {
     try{
-        const web3 = new Web3(`https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`)
         const truPoolContract = new web3.eth.Contract(truPoolReward_abi, truRewardAddress)
-        const masterContract = new web3.eth.Contract(masterContract_abi, masterContractAddress)
-        const poolContract = new web3.eth.Contract(contract_abi, contractAddress)
+        const masterContract = new web3.eth.Contract(ethTruMasterContract_abi, ethTruMasterContractAddress)
+        const poolContract = new web3.eth.Contract(ethTru_abi, ethTruAddress)
         const ethContract = new web3.eth.Contract(eth_abi, ethAddress)
         const truContract = new web3.eth.Contract(tru_abi, truAddress)
         const priceTruContract = new web3.eth.Contract(priceTru_abi, priceFeedTruAddress)
@@ -57,8 +46,7 @@ async function uniSwap_eth_tru_collector() {
         const totalEth = await reserves[0]/Math.pow(10, ethDecimals)
         const totalTru = await reserves[1]/Math.pow(10, truDecimals)
         //calculating total liquidity
-        const totalLiquidity = totalEth*ethPrice + totalTru* truPrice
-        const lpTokenPrice = totalLiquidity/totalSupply
+        const lpTokenPrice = await calculateLpTokenPrice(totalEth, ethPrice, totalTru, truPrice, totalSupply);
         //console.log(`Eth price ${ethPrice}, Tru price ${truPrice}, LP token price: ${lpTokenPrice}, ${poolAllocationPercent} sushi per block. Sushi allocated to TRU/ETH ${poolSushiRewardPerBlock}. Tru reward per second: ${truRewardPerSecond}`)
 
         return{
@@ -67,7 +55,7 @@ async function uniSwap_eth_tru_collector() {
             truRewardPerSecond,
             truPrice,
             ethPrice,
-            lpTokenPrice,
+            truEthLpTokenPrice: lpTokenPrice,
         }
 
     }

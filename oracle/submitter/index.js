@@ -1,12 +1,13 @@
-const {feedingPrice} = require('./tokenData')
-//require('dotenv').config()
+const { feedPrices } = require('./feedPrices');
+const { feedRewardRates } = require('./feedRewardRates');
+const { state } = require('../state')
 
-async function onChainPriceFeed() {
-    const onChainPrice = await feedingPrice()
-
-    return{
-        onChainPrice,
-    }
+async function feed(state) {
+    // await feedPrices(state);
+    await feedRewardRates(state);
 }
 
-exports.onChainPriceFeed = onChainPriceFeed
+// TODO: test code just for submission
+feed(state);
+
+exports.feed = feed;
