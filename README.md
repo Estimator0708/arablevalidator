@@ -12,6 +12,18 @@ v16.13.0
 Install packages
 `npm install`
 
+Setting up ESLint
+
+To automatically set ESLint to fix errors when you save the file. In Visual Studio Code, go to Settings -> Workspace and search for save, and click on "Edit in settings.json" and enter the following config: 
+
+```
+{
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"]
+}
+```
 ## Script flow
 
 Script has `collector` engine that collects information and put on state.
