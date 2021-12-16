@@ -5,7 +5,6 @@ const {ethUsdcPolyStakingLPAddress, usdcPolyAddress, ethPolyAddress, usdcPolyPri
 const web3 = new Web3(poly_url)
 async function quickswap_eth_usdc_collector(){
   try { 
-    //const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY_POLY}`)
     const poolContract = new web3.eth.Contract(stakingLpEthUsdc_abi,ethUsdcPolyStakingLPAddress)
     const usdcContract = new web3.eth.Contract(polyUsdc_abi,usdcPolyAddress);
     const ethContract = new web3.eth.Contract(polyEth_abi,ethPolyAddress);

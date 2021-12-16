@@ -1,17 +1,16 @@
 const { collect } = require('./collector');
-const {onChainPriceFeed} = require('./submitter')
+const { feed } = require('./submitter')
 const nodeCron = require("node-cron");
 require("dotenv").config();
 
-async function main() {    
-    //All scripts will run first second of first minute every hour
-    await nodeCron.schedule(" * * * * *",async function(){
-        const data = await collect();
-        const onChainPrice = await onChainPriceFeed(data)
-        console.log('collection', JSON.stringify(data, null, '\t'));
-        console.log('On Chain Price', JSON.stringify(onChainPrice, null, '\t'));
+async function main() {
+    // All scripts will run first second of first minute every hour
+    await nodeCron.schedule(" * * * * *",async function() {
+        const state = await collect();
+        console.log('collection', JSON.stringify(state, null, '\t'));
+        await feed(state)
+        console.log('feed the oracle successfully!');
     })
-    // TODO: submit data onchain - call submitter
 }
 
 main();

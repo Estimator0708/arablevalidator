@@ -5,8 +5,7 @@ const {quickEthpTokenAddress, ethPolyAddress, quickPolyAddress, quickPriceFeedAd
 const web3 = new Web3(poly_url)
 
 async function quickswap_quick_eth_collector(){
-    try{
-        //const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY_POLY}`)
+    try {
         const poolContract = new web3.eth.Contract(stakingLpEthQuick_abi,quickEthpTokenAddress)
         const quickContract = new web3.eth.Contract(polyQuick_abi,quickPolyAddress);
         const ethContract = new web3.eth.Contract(polyEth_abi,ethPolyAddress);
@@ -48,8 +47,7 @@ async function quickswap_quick_eth_collector(){
             rewardRate,
         }
 
-    }
-    catch(error){
+    } catch (error){
         console.log(error)
     }
 }
