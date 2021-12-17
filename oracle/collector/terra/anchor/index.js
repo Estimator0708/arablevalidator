@@ -3,13 +3,13 @@ const {
   columbus5,
   AddressProviderFromJson,
   MARKET_DENOMS,
-} = require("@anchor-protocol/anchor.js");
-const { LCDClient } = require("@terra-money/terra.js");
+} = require('@anchor-protocol/anchor.js');
+const { LCDClient } = require('@terra-money/terra.js');
 
 const collect_anchor = async () => {
   const lcd = new LCDClient({
-    URL: "https://lcd.terra.dev",
-    chainID: "columbus-5",
+    URL: 'https://lcd.terra.dev',
+    chainID: 'columbus-5',
   });
   const addressProvider = new AddressProviderFromJson(columbus5);
   const anchor = new Anchor(lcd, addressProvider);
