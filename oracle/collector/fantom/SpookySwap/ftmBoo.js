@@ -1,16 +1,16 @@
-const Web3 = require("web3");
-const contract_abi = require("./abis/lp_abi");
-const erc20 = require("./abis/erc20_abi");
-const priceFtm_abi = require("./abis/priceFtm_abi");
-const masterContract_abi = require("./abis/masterContract_abi");
-const { default: axios } = require("axios");
-const { fantom_url } = require("../../../config/config.rpc");
+const Web3 = require('web3');
+const contract_abi = require('./abis/lp_abi');
+const erc20 = require('./abis/erc20_abi');
+const priceFtm_abi = require('./abis/priceFtm_abi');
+const masterContract_abi = require('./abis/masterContract_abi');
+const { default: axios } = require('axios');
+const { fantom_url } = require('../../../../config/config.rpc');
 
-const masterContractAddress = "0x2b2929e785374c651a81a63878ab22742656dcdd";
-const lpContractAddress = "0xec7178f4c41f346b2721907f5cf7628e388a7a58";
-const ftmAddress = "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83";
-const booAddress = "0x841fad6eae12c286d1fd18d1d525dffa75c7effe";
-const priceFeedFtmAddress = "0xf4766552D15AE4d256Ad41B6cf2933482B0680dc";
+const masterContractAddress = '0x2b2929e785374c651a81a63878ab22742656dcdd';
+const lpContractAddress = '0xec7178f4c41f346b2721907f5cf7628e388a7a58';
+const ftmAddress = '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83';
+const booAddress = '0x841fad6eae12c286d1fd18d1d525dffa75c7effe';
+const priceFeedFtmAddress = '0xf4766552D15AE4d256Ad41B6cf2933482B0680dc';
 
 async function spookySwap_ftm_boo_collector() {
   try {
@@ -47,10 +47,10 @@ async function spookySwap_ftm_boo_collector() {
       (await ftmPriceRoundAnswer) / Math.pow(10, ftmPriceDecimals);
     //live Price of boo
     const response = axios.get(
-      "https://api.coingecko.com/api/v3/coins/spookyswap/tickers"
+      'https://api.coingecko.com/api/v3/coins/spookyswap/tickers'
     );
     const priceTicker = (await response).data.tickers.filter(
-      (item) => item.market.name == "Spookyswap"
+      (item) => item.market.name == 'Spookyswap'
     )[0];
     const booPrice = priceTicker.converted_last.usd;
     //checking supply of the pool
@@ -76,7 +76,7 @@ async function spookySwap_ftm_boo_collector() {
       lpTokenPrice,
     };
   } catch (error) {
-    console.log("something went wrong while fetching FTM-BOO LP pool");
+    console.log('something went wrong while fetching FTM-BOO LP pool');
   }
 }
 

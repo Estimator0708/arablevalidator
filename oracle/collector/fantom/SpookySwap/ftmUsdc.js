@@ -1,17 +1,17 @@
-const Web3 = require("web3");
-const contract_abi = require("./abis/lp_abi");
-const erc20 = require("./abis/erc20_abi");
-const priceUsdc_abi = require("./abis/priceUsdc_abi");
-const priceFtm_abi = require("./abis/priceFtm_abi");
-const masterContract_abi = require("./abis/masterContract_abi");
-const { fantom_url } = require("../../../config/config.rpc");
+const Web3 = require('web3');
+const contract_abi = require('./abis/lp_abi');
+const erc20 = require('./abis/erc20_abi');
+const priceUsdc_abi = require('./abis/priceUsdc_abi');
+const priceFtm_abi = require('./abis/priceFtm_abi');
+const masterContract_abi = require('./abis/masterContract_abi');
+const { fantom_url } = require('../../../../config/config.rpc');
 
-const masterContractAddress = "0x2b2929e785374c651a81a63878ab22742656dcdd";
-const lpContractAddress = "0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c";
-const ftmAddress = "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83";
-const usdcAddress = "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75";
-const priceFeedFtmAddress = "0xf4766552D15AE4d256Ad41B6cf2933482B0680dc";
-const priceFeedUsdcAddress = "0x2553f4eeb82d5A26427b8d1106C51499CBa5D99c";
+const masterContractAddress = '0x2b2929e785374c651a81a63878ab22742656dcdd';
+const lpContractAddress = '0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c';
+const ftmAddress = '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83';
+const usdcAddress = '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75';
+const priceFeedFtmAddress = '0xf4766552D15AE4d256Ad41B6cf2933482B0680dc';
+const priceFeedUsdcAddress = '0x2553f4eeb82d5A26427b8d1106C51499CBa5D99c';
 
 async function spookySwap_ftm_usdc_collector() {
   try {
@@ -82,7 +82,7 @@ async function spookySwap_ftm_usdc_collector() {
       lpTokenPrice,
     };
   } catch (error) {
-    console.log("something went wrong while fetching USDC-FTM LP pool");
+    console.log('something went wrong while fetching USDC-FTM LP pool');
   }
 }
 

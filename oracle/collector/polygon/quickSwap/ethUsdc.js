@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const { poly_url } = require('../../../config/config.rpc');
+const { poly_url } = require('../../../../config/config.rpc');
 const {
   polyUsdc_abi,
   polyEth_abi,
