@@ -14,16 +14,46 @@ Install packages
 
 Setting up ESLint
 
-To automatically set ESLint to fix errors when you save the file. In Visual Studio Code, go to Settings -> Workspace and search for save, and click on "Edit in settings.json" and enter the following config: 
+To automatically set ESLint to fix errors when you save the file. In Visual Studio Code, go to Settings -> Workspace and search for save, and click on "Edit in settings.json" and enter the following config:
 
-```
+```json
 {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "eslint.validate": ["javascript"]
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"]
 }
 ```
+
+VSCode Prettier configuration
+
+```json
+{
+  "window.zoomLevel": 3,
+  "go.useLanguageServer": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "editor.formatOnPaste": true,
+  "prettier.requireConfig": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
 ## Script flow
 
 Script has `collector` engine that collects information and put on state.
