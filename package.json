@@ -18,5 +18,9 @@
     "n": "^8.0.1",
     "node-cron": "^3.0.0",
     "web3": "^1.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-google": "^0.14.0"
   }
 }

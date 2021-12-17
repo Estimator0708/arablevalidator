@@ -2,22 +2,26 @@ const raydium = require('./lib/raydium.js');
 const axios = require('axios');
 
 function get_pairs() {
-    return axios.get('https://api.raydium.io/pairs').then(response => response.data);
+  return axios
+    .get('https://api.raydium.io/pairs')
+    .then((response) => response.data);
 }
 
 async function collect_raydium() {
-    // api version
-    const pairs = ['RAY-SOL', 'RAY-USDT']
-    const keyMapping = {
-        'RAY-SOL': 'raySol',
-        'RAY-USDT': 'rayUsdt',
-    }
-    const apiPairs = (await get_pairs()).filter(pair => pairs.indexOf(pair.name.toUpperCase()) > -1);
+  // api version
+  const pairs = ['RAY-SOL', 'RAY-USDT'];
+  const keyMapping = {
+    'RAY-SOL': 'raySol',
+    'RAY-USDT': 'rayUsdt',
+  };
+  const apiPairs = (await get_pairs()).filter(
+    (pair) => pairs.indexOf(pair.name.toUpperCase()) > -1
+  );
 
-    const response = {};
-    apiPairs.forEach(pair => {
-        response[keyMapping[pair.name.toUpperCase()]] = pair;
-    })
+  const response = {};
+  apiPairs.forEach((pair) => {
+    response[keyMapping[pair.name.toUpperCase()]] = pair;
+  });
 
     // get from on-chain
     // for (let i = 0; i < pairs.length; i++) {
