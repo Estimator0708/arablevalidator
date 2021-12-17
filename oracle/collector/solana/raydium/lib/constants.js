@@ -1,12 +1,6 @@
 const { publicKey, u128, u64 } = require('@project-serum/borsh')
 const { blob, struct, u8 } = require('buffer-layout')
 
-const COIN_IDS_BY_SYMBOL = {
-    'usdt' : 'tether',
-    'ray' : 'ray',
-    'sol' : 'solana',
-}
-
 // pulled from https://github.com/raydium-io/raydium-ui/blob/8545c79af3c2bc6b791e578d79c301e6f15a8eb1/src/utils/ids.ts#L11-L23
 const SERUM_PROGRAM_ID_V3 = '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin'
 const LIQUIDITY_POOL_PROGRAM_ID_V4 = '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8'
