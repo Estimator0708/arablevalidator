@@ -63,10 +63,15 @@ For changed state, it should be sumitted by `submitter` engine.
 `collector` and `submitter` engines should work separately and should not depend on each other.
 State is the way `collector` and `submitter` engines are connected each other.
 
-## Execute the script
+## Execute the oracle script
 
-Setup `.env` at `oracle` directory by referencing `env.example`.
+Setup `.env` directory by referencing `env.example`.
 Then execute `node oracle/index.js`
+
+## Execute the token vesting script
+
+Setup `.env` directory by referencing `env.example`.
+Then execute `node tokenvesting/index.js`
 
 ## How to ensure the security of oracle script
 
