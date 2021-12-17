@@ -19,10 +19,17 @@ async function collect_raydium() {
         response[keyMapping[pair.name.toUpperCase()]] = pair;
     })
 
-    // on-chain version
+    // get from on-chain
+    // for (let i = 0; i < pairs.length; i++) {
+    //     let pair = pairs[i]
+    //     response[keyMapping[pair]].lpPoolPriceChain = await raydium.getLpPoolPrice(pair)
+    // }
+
     for (let i = 0; i < pairs.length; i++) {
-        let pair = pairs[i]
-        response[keyMapping[pair]].lpPoolPriceChain = await raydium.getLpPoolPrice(pair)
+        const pair = pairs[i]
+        const apr = await raydium.getLpRewardApr(pair)
+        response[keyMapping[pair]].aprChain = apr
+        response[keyMapping[pair]].aprChainPct = (apr * 100.0).toFixed(2) + '%'
     }
     return response
 }
