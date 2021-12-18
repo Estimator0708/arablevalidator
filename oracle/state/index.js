@@ -92,7 +92,7 @@ exports.state = {
 			"ethTru": {
 				"poolAllocationPercent": 1.25,
 				"poolSushiRewardPerBlock": 0.0020409412821193133,
-				"truRewardPerSecond": 0.000000000011699306,
+				"truRewardPerSecond": 1.1699306e-11,
 				"truPrice": 0.27652619,
 				"ethPrice": 4042.50853742,
 				"truEthLpTokenPrice": {

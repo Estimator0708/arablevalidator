@@ -7,11 +7,7 @@ const web3 = setup();
 
 require('dotenv').config();
 
-// function registerRewardRate(
-//     uint256 farmId_,
-//     address token_,
-//     uint256 dailyRewardRate_
-// ) public onlyAllowedProvider
+
 
 exports.setRewardRate = async function(farmId, rewardToken, dailyRewardRate) {
     const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);

@@ -26,6 +26,10 @@
     const arCurveDAIUSDCUSDT = "0x8263667b329B83fe8a3cAe06B4200cc7267c12D6";
     const arSushiswapETHTRU = "0x7cf174d140E1cDaa723aF57D2f46Bd01e0aA9C29";
 
+    exports.deployer = deployer;
+    exports.farming = farming;
+    exports.exchange = exchange;
+    exports.manager = manager;
     exports.oracle = oracle;
     exports.arUSD = arUSD;
     exports.arBNB = arBNB;

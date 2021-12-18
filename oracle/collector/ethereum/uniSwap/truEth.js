@@ -17,7 +17,8 @@ async function uniSwap_eth_tru_collector() {
         const priceEthContract = new web3.eth.Contract(priceEth_abi, priceFeedEthAddress)
         //getting tru.
         const truRewardPerSecondDecimals = await truPoolContract.methods.rewardPerSecond().call()
-        const truRewardPerSecond  = truRewardPerSecondDecimals/Math.pow(10,18)
+        const truRewardPerSecond  = truRewardPerSecondDecimals/1e18
+       // web3.utils.toHex(web3.utils.toWei(`${parseInt(truRewardPerSecondDecimals * 1e18)/1e18}`, 'ether'))
         //getting sushi allocated to pool 
         const poolInfo = await masterContract.methods.poolInfo(8).call()
         const totalPoolAllocation = await masterContract.methods.totalAllocPoint().call()

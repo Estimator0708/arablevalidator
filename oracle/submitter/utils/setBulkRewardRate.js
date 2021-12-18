@@ -20,7 +20,7 @@ exports.setBulkRewardRate = async function(farmId, rewardTokens, dailyRewardRate
     const priceContract = new web3.eth.Contract(oracle_abi, oracle)
     
     // cut decimals if too low
-    dailyRewardRates = dailyRewardRates.map(rate => web3.utils.toHex(web3.utils.toWei(`${parseInt(rate * 1e18)/1e18}`, 'ether')))
+    dailyRewardRates = dailyRewardRates.map(rate => web3.utils.toHex(web3.utils.toWei(`${parseInt(rate * 1e18)}`, 'ether')))
     const setFarmReward = priceContract.methods.bulkRegisterRewardRate(farmId, rewardTokens, dailyRewardRates)
     const txObj = await setFarmReward.send({
         from: myAccount,

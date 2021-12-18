@@ -2,7 +2,7 @@ const Web3 = require('web3');
 const {poly_url} = require('../../../config/config.rpc')
 const {polyUsdc_abi, polyEth_abi, polyPriceEth_abi, polyPriceUsdc_abi, polyEthUsdcReward_abi, stakingLpEthUsdc_abi } = require('../../libs/abis');
 const {ethUsdcPolyStakingLPAddress, usdcPolyAddress, ethPolyAddress, usdcPolyPriceFeedAddress, ethPolyPriceFeedAddress, polyRewardAddress} = require('../../libs/address');
-const web3 = new Web3(poly_url)
+const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.infura_api_key}`)
 async function quickswap_eth_usdc_collector(){
   try { 
     const poolContract = new web3.eth.Contract(stakingLpEthUsdc_abi,ethUsdcPolyStakingLPAddress)
@@ -37,7 +37,7 @@ async function quickswap_eth_usdc_collector(){
     //reward Mechanic
     const rewardRateDecimal = await rewardContract.methods.rewardRate().call()
     const rewardRate = await rewardRateDecimal/1e18
-   // console.log( `Lp token Price: ${lpTokenPrice}, Reward rate: ${rewardRate},`)
+   //console.log( `Lp token Price: ${lpTokenPrice}, Reward rate: ${rewardRate},`)
 
     return {
         ethPrice,

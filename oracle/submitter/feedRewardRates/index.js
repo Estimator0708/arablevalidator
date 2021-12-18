@@ -1,6 +1,5 @@
 const addresses = require ('../config/address.js');
 const { waitSeconds } = require('../utils/wait');
-const { setRewardRate } = require('../utils/setRewardRate');
 const { setBulkRewardRate } = require('../utils/setBulkRewardRate');
 const { farms } = require('../config')
 
@@ -57,7 +56,7 @@ function convertToFormalRewardRates(state) {
                 rewardRates: [
                     state.eth.ethdata.ethTru.poolSushiRewardPerBlock,
                     state.eth.ethdata.ethTru.truRewardPerSecond,
-                ] // TODO: make it correct
+                ] 
             },
             {
                 farmId: 11,
@@ -69,20 +68,13 @@ function convertToFormalRewardRates(state) {
 
 async function feedRewardRates(state){
     try {
-        // const state = await collect()
-        // const cakeAllocatePerBlock = state.bsc.pancakeswap.cakeBnb.poolCakeRewardsPerBlock
-        // const cakeAllocatePerDay = 1;
-        // const farmId = 3
-        // await setRewardRate(farmId, arCAKE, cakeAllocatePerDay);
-        // await setBulkRewardRate(farmId, [arCAKE], [cakeAllocatePerDay]);
-
         const farmRewardRates = convertToFormalRewardRates(state);
         for (let i = 0; i < farmRewardRates.length; i ++) {
             const farm = farmRewardRates[i];
             console.log(`submitting farm reward information for farmId=${farm.farmId}`);
             const addrs = farm.rewardTokenSymbols.map(symbol => addresses[symbol]);
             await setBulkRewardRate(farm.farmId, addrs, farm.rewardRates);
-            await waitSeconds(3);
+            await waitSeconds(5);
         }
     }
     catch(error){
