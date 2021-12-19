@@ -25,6 +25,7 @@ const arUniswapETHUSDT = '0x13fE6DAEBa8214BbFF8F28c7eAdFF346c63017D1';
 const arCurveDAIUSDCUSDT = '0x8263667b329B83fe8a3cAe06B4200cc7267c12D6';
 const arSushiswapETHTRU = '0x7cf174d140E1cDaa723aF57D2f46Bd01e0aA9C29';
 
+exports.farming = farming
 exports.oracle = oracle;
 exports.arUSD = arUSD;
 exports.arBNB = arBNB;

@@ -1,28 +1,21 @@
-const { setup } = require('./network');
-const { oracle } = require('../config/address.js');
-const { oracle_abi } = require('../abis/oracle_abi');
-
+const { setup } = require('../../submitter/utils/network');
+const { farming } = require('../../submitter/config/address');
+const { farm_abi } = require('../abi/farm_abi');
 const web3 = setup();
-
 require('dotenv').config();
 
-
-exports.setRewardRate = async function (farmId, rewardToken, dailyRewardRate) {
+exports.setRewardRateSum = async function (farmId, rewardToken) {
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );
   await web3.eth.accounts.wallet.add(account);
   const myAccount = account.address;
   const gasPrice = await web3.eth.getGasPrice();
-  const oracleContract = new web3.eth.Contract(oracle_abi, oracle);
+  const oracleContract = new web3.eth.Contract(farm_abi, farming);
 
-  dailyRewardRate = web3.utils.toHex(
-    web3.utils.toWei(`${dailyRewardRate}`, 'ether')
-  );
-  const setFarmReward = oracleContract.methods.registerRewardRate(
+  const setFarmReward = oracleContract.methods.updateRewardRateSum(
     farmId,
-    rewardToken,
-    dailyRewardRate
+    rewardToken
   );
   const txObj = await setFarmReward.send({
     from: myAccount,
