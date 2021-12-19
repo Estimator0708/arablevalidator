@@ -1,16 +1,44 @@
 const Web3 = require('web3');
 const { poly_url } = require('../../../../config/config.rpc');
-const {polyUsdc_abi, polyEth_abi, polyPriceEth_abi, polyPriceUsdc_abi, polyEthUsdcReward_abi, stakingLpEthUsdc_abi } = require('../../libs/abis');
-const {ethUsdcPolyStakingLPAddress, usdcPolyAddress, ethPolyAddress, usdcPolyPriceFeedAddress, ethPolyPriceFeedAddress, polyRewardAddress} = require('../../libs/address');
-const web3 = new Web3(`https://polygon-mainnet.infura.io/v3/${process.env.infura_api_key}`)
-async function quickswap_eth_usdc_collector(){
-  try { 
-    const poolContract = new web3.eth.Contract(stakingLpEthUsdc_abi,ethUsdcPolyStakingLPAddress)
-    const usdcContract = new web3.eth.Contract(polyUsdc_abi,usdcPolyAddress);
-    const ethContract = new web3.eth.Contract(polyEth_abi,ethPolyAddress);
-    const priceUsdcContract = new web3.eth.Contract(polyPriceUsdc_abi,usdcPolyPriceFeedAddress);
-    const priceEthContract = new web3.eth.Contract(polyPriceEth_abi,ethPolyPriceFeedAddress);
-    const rewardContract = new web3.eth.Contract(polyEthUsdcReward_abi, polyRewardAddress)
+const {
+  polyUsdc_abi,
+  polyEth_abi,
+  polyPriceEth_abi,
+  polyPriceUsdc_abi,
+  polyEthUsdcReward_abi,
+  stakingLpEthUsdc_abi,
+} = require('../../libs/abis');
+const {
+  ethUsdcPolyStakingLPAddress,
+  usdcPolyAddress,
+  ethPolyAddress,
+  usdcPolyPriceFeedAddress,
+  ethPolyPriceFeedAddress,
+  polyRewardAddress,
+} = require('../../libs/address');
+const web3 = new Web3(
+  `https://polygon-mainnet.infura.io/v3/${process.env.infura_api_key}`
+);
+async function quickswap_eth_usdc_collector() {
+  try {
+    const poolContract = new web3.eth.Contract(
+      stakingLpEthUsdc_abi,
+      ethUsdcPolyStakingLPAddress
+    );
+    const usdcContract = new web3.eth.Contract(polyUsdc_abi, usdcPolyAddress);
+    const ethContract = new web3.eth.Contract(polyEth_abi, ethPolyAddress);
+    const priceUsdcContract = new web3.eth.Contract(
+      polyPriceUsdc_abi,
+      usdcPolyPriceFeedAddress
+    );
+    const priceEthContract = new web3.eth.Contract(
+      polyPriceEth_abi,
+      ethPolyPriceFeedAddress
+    );
+    const rewardContract = new web3.eth.Contract(
+      polyEthUsdcReward_abi,
+      polyRewardAddress
+    );
     //live price of eth
     const ethPriceRoundData = await priceEthContract.methods
       .latestRoundData()
@@ -44,9 +72,9 @@ async function quickswap_eth_usdc_collector(){
       totalEthStaked * ethPrice + totalUsdcStaked * usdcPrice;
     const lpTokenPrice = totalLiquidity / totalSupply;
     //reward Mechanic
-    const rewardRateDecimal = await rewardContract.methods.rewardRate().call()
-    const rewardRate = await rewardRateDecimal/1e18
-   //console.log( `Lp token Price: ${lpTokenPrice}, Reward rate: ${rewardRate},`)
+    const rewardRateDecimal = await rewardContract.methods.rewardRate().call();
+    const rewardRate = (await rewardRateDecimal) / 1e18;
+    //console.log( `Lp token Price: ${lpTokenPrice}, Reward rate: ${rewardRate},`)
 
     return {
       ethPrice,
