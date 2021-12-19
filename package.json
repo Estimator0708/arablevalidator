@@ -6,14 +6,21 @@
     "@solana/web3.js": "^1.31.0",
     "@terra-money/terra.js": "^3.0.1",
     "axios": "^0.24.0",
+    "bignumber.js": "^9.0.2",
+    "buffer-layout": "^1.2.2",
     "coingecko-api": "^1.0.10",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "ethereumjs-tx": "^2.1.2",
     "express": "^4.17.1",
     "fs-extra": "^10.0.0",
+    "lodash": "^4.17.21",
     "n": "^8.0.1",
     "node-cron": "^3.0.0",
     "web3": "^1.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-google": "^0.14.0"
   }
 }

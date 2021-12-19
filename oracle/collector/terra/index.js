@@ -1,4 +1,4 @@
-const { collect_anchor } = require("./anchor");
+const { collect_anchor } = require('./anchor');
 
 async function collect_terra() {
   const anchor = await collect_anchor();

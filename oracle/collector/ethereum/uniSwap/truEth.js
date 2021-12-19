@@ -1,9 +1,26 @@
 const Web3 = require('web3');
-const {eth_url} = require('../../../config/config.rpc')
-const {eth_abi, tru_abi, priceTru_abi, priceEth_abi, ethTru_abi, ethTruMasterContract_abi, truPoolReward_abi} = require('../../libs/abis');
-const {calculateLpTokenPrice} = require('../../utils/calculatingLpTokenPrice')
-const {truRewardAddress, ethAddress, truAddress, priceFeedTruAddress, priceFeedEthAddress, 
-    ethTruAddress, ethTruMasterContractAddress} = require('../../libs/address');
+const { eth_url } = require('../../../../config/config.rpc');
+const {
+  eth_abi,
+  tru_abi,
+  priceTru_abi,
+  priceEth_abi,
+  ethTru_abi,
+  ethTruMasterContract_abi,
+  truPoolReward_abi,
+} = require('../../libs/abis');
+const {
+  calculateLpTokenPrice,
+} = require('../../utils/calculatingLpTokenPrice');
+const {
+  truRewardAddress,
+  ethAddress,
+  truAddress,
+  priceFeedTruAddress,
+  priceFeedEthAddress,
+  ethTruAddress,
+  ethTruMasterContractAddress,
+} = require('../../libs/address');
 const web3 = new Web3(eth_url);
 
 async function uniSwap_eth_tru_collector() {
@@ -50,18 +67,14 @@ async function uniSwap_eth_tru_collector() {
         const lpTokenPrice = await calculateLpTokenPrice(totalEth, ethPrice, totalTru, truPrice, totalSupply);
         //console.log(`Eth price ${ethPrice}, Tru price ${truPrice}, LP token price: ${lpTokenPrice}, ${poolAllocationPercent} sushi per block. Sushi allocated to TRU/ETH ${poolSushiRewardPerBlock}. Tru reward per second: ${truRewardPerSecond}`)
 
-        return{
-            poolAllocationPercent,
-            poolSushiRewardPerBlock,
-            truRewardPerSecond,
-            truPrice,
-            ethPrice,
-            truEthLpTokenPrice: lpTokenPrice,
-        }
-
-    }
-    catch(error){
-
-    }
+    return {
+      poolAllocationPercent,
+      poolSushiRewardPerBlock,
+      truRewardPerSecond,
+      truPrice,
+      ethPrice,
+      truEthLpTokenPrice: lpTokenPrice,
+    };
+  } catch (error) {}
 }
-exports.uniSwap_eth_tru_collector= uniSwap_eth_tru_collector
+exports.uniSwap_eth_tru_collector = uniSwap_eth_tru_collector;
