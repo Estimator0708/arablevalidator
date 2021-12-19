@@ -1,16 +1,10 @@
 const { setup } = require('./network');
-
 const { oracle } = require('../config/address.js');
 const { oracle_abi } = require('../abis/oracle_abi');
 
 const web3 = setup();
 
 require('dotenv').config();
-
-// function bulkRegisterRewardRate(
-//     uint256 farmId_,
-//     address[] calldata rewardTokens_,
-//     uint256[] calldata dailyRewardRates_) external onlyAllowedProvider
 
 exports.setBulkRewardRate = async function (
   farmId,
