@@ -1,5 +1,3 @@
-
-
 const { synths } = require('./synths');
 const { farms } = require('./farms');
 
