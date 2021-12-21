@@ -33,7 +33,7 @@ exports.releaseVesting = async function () {
     gasLimit: web3.utils.toHex(300000),
     gasPrice,
   });
-  console.log('Success!', txObj.transactionHash);
+  console.log('Success releaseVesting!', txObj.transactionHash);
   return txObj.transactionHash;
 };
 
@@ -57,7 +57,7 @@ exports.rootDistributerReleaseAll = async function () {
     gasLimit: web3.utils.toHex(300000),
     gasPrice,
   });
-  console.log('Success!', txObj.transactionHash);
+  console.log('Success rootDistributerReleaseAll!', txObj.transactionHash);
   return txObj.transactionHash;
 };
 
@@ -78,7 +78,7 @@ exports.dstakingReleaseFromStakingRoot = async function (dstaking) {
     gasLimit: web3.utils.toHex(300000),
     gasPrice,
   });
-  console.log('Success!', txObj.transactionHash);
+  console.log('Success dstakingReleaseFromStakingRoot!', txObj.transactionHash);
   return txObj.transactionHash;
 };
 
@@ -99,7 +99,7 @@ exports.stakingReleaseFromStakingRoot = async function () {
     gasLimit: web3.utils.toHex(300000),
     gasPrice,
   });
-  console.log('Success!', txObj.transactionHash);
+  console.log('Success stakingReleaseFromStakingRoot!', txObj.transactionHash);
   return txObj.transactionHash;
 };
 
