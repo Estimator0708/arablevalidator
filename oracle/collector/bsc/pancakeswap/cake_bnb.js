@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const BigNumber = require('bignumber.js')
 const { bsc_url } = require('../../../../config/config.rpc');
 const {
   cake_abi,
@@ -44,7 +45,7 @@ async function pancakswap_cake_bnb_collector() {
     const bnbPriceRoundAnswer = await bnbPriceRoundData.answer;
     const bnbPriceDecimals = await priceBNBContract.methods.decimals().call();
     const bnbPrice =
-      (await bnbPriceRoundAnswer) / Math.pow(10, bnbPriceDecimals);
+     new BigNumber(await bnbPriceRoundAnswer).div(new BigNumber(Math.pow(10, bnbPriceDecimals)));
     //live Price of cake
     const cakePriceRoundData = await priceCakeContract.methods
       .latestRoundData()
@@ -52,18 +53,18 @@ async function pancakswap_cake_bnb_collector() {
     const cakePriceRoundAnswer = await cakePriceRoundData.answer;
     const cakePriceDecimals = await priceCakeContract.methods.decimals().call();
     const cakePrice =
-      (await cakePriceRoundAnswer) / Math.pow(10, cakePriceDecimals);
+     new BigNumber(await cakePriceRoundAnswer).div(new BigNumber(Math.pow(10, cakePriceDecimals)));
     //total supply of the pool
     const totalSupplyPool = await poolContract.methods.totalSupply().call();
     const totalSupplyDecimals = await poolContract.methods.decimals().call();
     const totalSupply =
-      (await totalSupplyPool) / Math.pow(10, totalSupplyDecimals);
+     new BigNumber(await totalSupplyPool).div(new BigNumber(Math.pow(10, totalSupplyDecimals)));
     // Getting total number of cake and bnb in pool
     const cakeDecimals = await cakeContract.methods.decimals().call();
     const bnbDecimals = await bnbContract.methods.decimals().call();
     const reserves = await poolContract.methods.getReserves().call();
-    const totalCake = (await reserves[0]) / Math.pow(10, cakeDecimals);
-    const totalBnb = (await reserves[1]) / Math.pow(10, bnbDecimals);
+    const totalCake = new BigNumber(await reserves[0]).div(new BigNumber(Math.pow(10, cakeDecimals)));
+    const totalBnb = new BigNumber(await reserves[1]).div(new BigNumber(Math.pow(10, bnbDecimals)));
     //calculating total liquidity
     const lpTokenPrice = await calculateLpTokenPrice(
       totalCake,
@@ -81,10 +82,10 @@ async function pancakswap_cake_bnb_collector() {
     const rewardsPerBlock = await mainFarmContract.methods
       .cakePerBlock()
       .call();
-    const cakeEmissionPerBlock = rewardsPerBlock / 1e18;
+    const cakeEmissionPerBlock = web3.utils.fromWei(rewardsPerBlock,'ether');
     const poolRewardsPerBlock =
-      (poolAllocation / totalAllocPoint) * cakeEmissionPerBlock;
-    //console.log(`BNB price ${bnbPrice}. Cake price: ${cakePrice}. Cake allocated to Cake/BNB pool ${poolRewardsPerBlock}. LP token Price ${lpTokenPrice}`)
+      (new BigNumber(poolAllocation).div(new BigNumber(totalAllocPoint))).times(new BigNumber(cakeEmissionPerBlock));
+    //console.log(`BNB price ${bnbPrice}. Cake price: ${cakePrice}. Cake allocated to Cake/BNB pool ${poolRewardsPerBlock}.`)
 
     return {
       bnbPrice,

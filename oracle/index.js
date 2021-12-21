@@ -11,7 +11,7 @@ async function main() {
 
 async function priceSetter(){
     // All scripts will run first second of first minute every hour
-  await nodeCron.schedule(' * * * * *', async function () {
+  await nodeCron.schedule('1 * * * *', async function () {
     const state = await collect();
     console.log('collection', JSON.stringify(state, null, '\t'));
     await feed(state);
@@ -22,7 +22,7 @@ async function priceSetter(){
 async function epochActions(){
   //this job will only run once a day as the value is hardcode to a day in farming contract.
   //As of now, this will run at 1st min of 1am everyday
-  await nodeCron.schedule(' 1 1 * * *', async function () {
+  await nodeCron.schedule(' 5 1 * * *', async function () {
     await setter()
   
   });

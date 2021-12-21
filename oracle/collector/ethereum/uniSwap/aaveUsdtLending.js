@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const BigNumber = require('bignumber.js')
 const { eth_url } = require('../../../../config/config.rpc');
 const { aaveLending_abi } = require('../../libs/abis');
 const { lendingPool, usdtAddress } = require('../../libs/address');
@@ -10,10 +11,11 @@ async function aaveLending_usdt() {
     const lendingdata = await poolContract.methods
       .getReserveData(usdtAddress)
       .call();
-    const currentLendingRate = (await lendingdata[3]) / 1e25;
-    const stableBorrowRate = (await lendingdata.currentStableBorrowRate) / 1e25;
+    const decimals = new BigNumber(1e25);
+    const currentLendingRate = new BigNumber(await lendingdata[3]).div(decimals);
+    const stableBorrowRate = new BigNumber(await lendingdata.currentStableBorrowRate).div(decimals);
     const variedBorrowRate =
-      (await lendingdata.currentVariableBorrowRate) / 1e25;
+      new BigNumber(await lendingdata.currentVariableBorrowRate).div(decimals);
     //console.log('lending rate: ' + currentLendingRate + '%, Stable borrow rate: ' + stableBorrowRate +'%, Varied borrow rate: ' +variedBorrowRate + '%')
 
     return {
@@ -25,5 +27,4 @@ async function aaveLending_usdt() {
     console.log(error);
   }
 }
-
 exports.aaveLending_usdt = aaveLending_usdt;

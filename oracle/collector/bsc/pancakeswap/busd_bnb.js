@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const BigNumber = require('bignumber.js')
 const { bsc_url } = require('../../../../config/config.rpc');
 const {
   busd_abi,
@@ -19,7 +20,7 @@ const {
 const {
   calculateLpTokenPrice,
 } = require('../../utils/calculatingLpTokenPrice');
-const web3 = new Web3(bsc_url);
+const web3 = new Web3(bsc_url); 
 
 async function pancakswap_busd_bnb_collector() {
   try {
@@ -45,7 +46,7 @@ async function pancakswap_busd_bnb_collector() {
     const bnbPriceRoundAnswer = await bnbPriceRoundData.answer;
     const bnbPriceDecimals = await priceBNBContract.methods.decimals().call();
     const bnbPrice =
-      (await bnbPriceRoundAnswer) / Math.pow(10, bnbPriceDecimals);
+     new BigNumber(await bnbPriceRoundAnswer).div(new BigNumber(Math.pow(10, bnbPriceDecimals)));
     //live Price of busd
     const busdPriceRoundData = await priceBusdContract.methods
       .latestRoundData()
@@ -53,18 +54,18 @@ async function pancakswap_busd_bnb_collector() {
     const busdPriceRoundAnswer = await busdPriceRoundData.answer;
     const busdPriceDecimals = await priceBusdContract.methods.decimals().call();
     const busdPrice =
-      (await busdPriceRoundAnswer) / Math.pow(10, busdPriceDecimals);
+     new BigNumber(await busdPriceRoundAnswer).div(new BigNumber(Math.pow(10, busdPriceDecimals)));
     //total supply of the pool
     const totalSupplyPool = await poolContract.methods.totalSupply().call();
     const totalSupplyDecimals = await poolContract.methods.decimals().call();
     const totalSupply =
-      (await totalSupplyPool) / Math.pow(10, totalSupplyDecimals);
+     new BigNumber(await totalSupplyPool).div(new BigNumber(Math.pow(10, totalSupplyDecimals)));
     // Getting total number of busd and bnb in pool
     const busdDecimals = await busdContract.methods.decimals().call();
     const bnbDecimals = await bnbContract.methods.decimals().call();
     const reserves = await poolContract.methods.getReserves().call();
-    const totalBusd = (await reserves[0]) / Math.pow(10, busdDecimals);
-    const totalBnb = (await reserves[1]) / Math.pow(10, bnbDecimals);
+    const totalBusd = new BigNumber(await reserves[0]).div(new BigNumber(Math.pow(10, busdDecimals)));
+    const totalBnb = new BigNumber(await reserves[1]).div(new BigNumber(Math.pow(10, bnbDecimals)));
     //calculating total liquidity
     const lpTokenPrice = await calculateLpTokenPrice(
       totalBusd,
@@ -79,13 +80,13 @@ async function pancakswap_busd_bnb_collector() {
     const totalAllocPoint = await mainFarmContract.methods
       .totalAllocPoint()
       .call();
-    const rewardsPerBlock = await mainFarmContract.methods
+    let rewardsPerBlock = await mainFarmContract.methods
       .cakePerBlock()
       .call();
-    const cakeEmissionPerBlock = rewardsPerBlock / 1e18;
+    const cakeEmissionPerBlock = web3.utils.fromWei(rewardsPerBlock,'ether');
     const poolRewardsPerBlock =
-      (poolAllocation / totalAllocPoint) * cakeEmissionPerBlock;
-    //console.log(`BNB price ${bnbPrice}. Busd Price ${busdPrice}. Total Cake emission per block: ${cakeEmissionPerBlock}. Cake allocated to busd/BNB pool: ${poolRewardsPerBlock}`)
+      (new BigNumber(poolAllocation).div(new BigNumber(totalAllocPoint))).times(new BigNumber(cakeEmissionPerBlock));
+    //console.log(`BNB price ${bnbPrice}. Busd Price ${busdPrice}. Total Cake emission per block: ${cakeEmissionPerBlock}. Cake allocated to busd/BNB pool: ${poolRewardsPerBlock}.`)
 
     return {
       bnbPrice,

@@ -56,7 +56,7 @@ function convertToFormalRewardRates(state) {
       rewardTokenSymbols: ['arSUSHI', 'arTRU'],
       rewardRates: [
         state.eth.ethdata.ethTru.poolSushiRewardPerBlock,
-        state.eth.ethdata.ethTru.truRewardPerSecond,
+        state.eth.ethdata.ethTru.truRewardPerDay,
       ], // TODO: make it correct
     },
     {

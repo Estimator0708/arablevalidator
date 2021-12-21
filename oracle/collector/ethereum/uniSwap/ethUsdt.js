@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const BigNumber = require('bignumber.js');
 const { eth_url } = require('../../../../config/config.rpc');
 const {
   eth_abi,
@@ -39,7 +40,7 @@ async function uniSwap_weth_usdt_collector() {
     const usdtPriceRoundAnswer = await usdtPriceRoundData.answer;
     const usdtPriceDecimals = await priceUsdtContract.methods.decimals().call();
     const usdtPrice =
-      (await usdtPriceRoundAnswer) / Math.pow(10, usdtPriceDecimals);
+      new BigNumber(await usdtPriceRoundAnswer).div(new BigNumber(Math.pow(10, usdtPriceDecimals)));
     //live price of eth
     const ethPriceRoundData = await priceEthContract.methods
       .latestRoundData()
@@ -47,7 +48,7 @@ async function uniSwap_weth_usdt_collector() {
     const ethPriceRoundAnswer = await ethPriceRoundData.answer;
     const ethPriceDecimals = await priceEthContract.methods.decimals().call();
     const ethPrice =
-      (await ethPriceRoundAnswer) / Math.pow(10, ethPriceDecimals);
+    new BigNumber(await ethPriceRoundAnswer).div(new BigNumber(Math.pow(10, ethPriceDecimals)));
     //checking supply of the pool
     const totalSupplyPool = await poolContract.methods.totalSupply().call();
     const totalSupplyDecimals = await poolContract.methods.decimals().call();
@@ -57,8 +58,8 @@ async function uniSwap_weth_usdt_collector() {
     const ethDecimals = await ethContract.methods.decimals().call();
     const usdtDecimals = await usdtContract.methods.decimals().call();
     const reserves = await poolContract.methods.getReserves().call();
-    const totalEth = (await reserves[0]) / Math.pow(10, ethDecimals);
-    const totalUsdt = (await reserves[1]) / Math.pow(10, usdtDecimals);
+    const totalEth = new BigNumber(await reserves[0]).div(new BigNumber(Math.pow(10, ethDecimals)));
+    const totalUsdt = new BigNumber(await reserves[1]).div(new BigNumber(Math.pow(10, usdtDecimals)));
     //calculating total liquidity
     const lpTokenPrice = await calculateLpTokenPrice(
       totalEth,
@@ -67,7 +68,7 @@ async function uniSwap_weth_usdt_collector() {
       usdtPrice,
       totalSupply
     );
-    // console.log(`Eth price ${ethPrice}, Usdt price ${usdtPrice},LP token price:  ${lpTokenPrice}, `)
+    //console.log(`Eth price ${ethPrice}, Usdt price ${usdtPrice},LP token price:  ${lpTokenPrice}, `)
 
     return {
       ethPrice,
