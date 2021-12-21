@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "tokenvesting": "node tokenvesting/index.js"
+  },
   "dependencies": {
     "@anchor-protocol/anchor.js": "^2.0.0",
     "@project-serum/serum": "^0.13.60",
