@@ -61,6 +61,30 @@ exports.rootDistributerReleaseAll = async function () {
   return txObj.transactionHash;
 };
 
+// - StakingRoot.distributeRewards - daily - any user (after release)
+exports.stakingRootDistributeRewards = async function () {
+  const account = web3.eth.accounts.privateKeyToAccount(
+    process.env.PRIVATE_KEY
+  );
+  await web3.eth.accounts.wallet.add(account);
+  const myAccount = account.address;
+  const gasPrice = await web3.eth.getGasPrice();
+
+  const stakingRootContract = new web3.eth.Contract(
+    staking_root_abi,
+    staking_root
+  );
+
+  const distributeRewards = stakingRootContract.methods.distributeRewards();
+  const txObj = await distributeRewards.send({
+    from: myAccount,
+    gasLimit: web3.utils.toHex(3000000),
+    gasPrice,
+  });
+  console.log('Success stakingRootDistributeRewards!', txObj.transactionHash);
+  return txObj.transactionHash;
+};
+
 // - DStaking.claimRewardsFromRoot - all the validator - daily - any user (after release)
 exports.dstakingReleaseFromStakingRoot = async function (dstaking) {
   const account = web3.eth.accounts.privateKeyToAccount(

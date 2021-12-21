@@ -3,6 +3,7 @@ const {
   rootDistributerReleaseAll,
   dstakingReleaseFromStakingRoot,
   stakingReleaseFromStakingRoot,
+  stakingRootDistributeRewards,
   getValidators,
 } = require('./utils/index.js');
 
@@ -10,11 +11,14 @@ const nodeCron = require('node-cron');
 require('dotenv').config();
 
 async function runTokenVesting() {
+  console.log('================ starting token vesting flow ================');
   // TODO: If already claimed for the epoch, not claim again to reduce gas price
   // - ArableVesting.release - daily - any user
   await releaseVesting();
   // - RootDistributer.releaseToMemberAll - daily - any user (after release)
   await rootDistributerReleaseAll();
+  // - StakingRoot.distributeRewards - daily - any user (after release)
+  await stakingRootDistributeRewards();
   // - Staking.claimRewardsFromRoot - daily - any user (after release)
   await stakingReleaseFromStakingRoot();
 
@@ -23,6 +27,7 @@ async function runTokenVesting() {
   for (let i = 0; i < dStakingInfos.length; i++) {
     await dstakingReleaseFromStakingRoot(dStakingInfos[i].addr);
   }
+  console.log('================ finished token vesting flow ================');
 }
 
 async function main() {
