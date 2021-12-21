@@ -4,7 +4,7 @@ const { farm_abi } = require('../abi/farm_abi');
 const web3 = setup();
 require('dotenv').config();
 
-exports.setRewardRateSum = async function (farmId, rewardToken) {
+exports.updateRewardRateSum = async function (farmId, rewardToken) {
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );

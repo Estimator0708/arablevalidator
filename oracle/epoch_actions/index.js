@@ -1,7 +1,5 @@
-const {setRewardRate} = require('./updateRewardRate');
+const { updateRewardRateSums } = require('./updateRewardRate');
 
-async function setter(){
-    await setRewardRate();
-}
-
-exports.setter = setter;
+exports.executeEpoch = async function () {
+  await updateRewardRateSums();
+};
