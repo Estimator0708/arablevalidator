@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const BigNumber = require('bignumber.js');
 const { eth_url } = require('../../../../config/config.rpc');
 const {
   eth_abi,
@@ -48,17 +49,17 @@ async function uniSwap_eth_tru_collector() {
     const truRewardPerSecondDecimals = await truPoolContract.methods
       .rewardPerSecond()
       .call();
-    const truRewardPerSecond = truRewardPerSecondDecimals / Math.pow(10, 18);
+    const truRewardPerDay = (new BigNumber(truRewardPerSecondDecimals).div(new BigNumber(Math.pow(10, 18)))).times(new BigNumber(86400)); //multiply by total seconds in a day
     //getting sushi allocated to pool
     const poolInfo = await masterContract.methods.poolInfo(8).call();
     const totalPoolAllocation = await masterContract.methods
       .totalAllocPoint()
       .call();
-    const sushiPerBlock = await masterContract.methods.sushiPerBlock().call();
-    const poolAllocation = poolInfo.allocPoint;
-    const poolAllocationPercent = (poolAllocation * 100) / totalPoolAllocation;
+    const sushiPerBlock = new BigNumber(await masterContract.methods.sushiPerBlock().call());
+    const poolAllocation = new BigNumber(poolInfo.allocPoint);
+    const poolAllocationPercent = (poolAllocation.times(new BigNumber(100))).div(new BigNumber(totalPoolAllocation));
     const poolSushiRewardPerBlock =
-      (poolAllocationPercent * sushiPerBlock) / 1e18 / 100;
+      (poolAllocationPercent.times(sushiPerBlock)).div(new BigNumber( 1e20));
     //live Price of Tru
     const truPriceRoundData = await priceTruContract.methods
       .latestRoundData()
@@ -66,7 +67,7 @@ async function uniSwap_eth_tru_collector() {
     const truPriceRoundAnswer = await truPriceRoundData.answer;
     const truPriceDecimals = await priceTruContract.methods.decimals().call();
     const truPrice =
-      (await truPriceRoundAnswer) / Math.pow(10, truPriceDecimals);
+     new BigNumber(await truPriceRoundAnswer).div(new BigNumber(Math.pow(10, truPriceDecimals)));
     //live Price of ETH
     const ethPriceRoundData = await priceEthContract.methods
       .latestRoundData()
@@ -74,18 +75,18 @@ async function uniSwap_eth_tru_collector() {
     const ethPriceRoundAnswer = await ethPriceRoundData.answer;
     const ethPriceDecimals = await priceEthContract.methods.decimals().call();
     const ethPrice =
-      (await ethPriceRoundAnswer) / Math.pow(10, ethPriceDecimals);
+     new BigNumber(await ethPriceRoundAnswer).div(new BigNumber(Math.pow(10, ethPriceDecimals)));
     //checking supply of the pool
     const totalSupplyPool = await poolContract.methods.totalSupply().call();
     const totalSupplyDecimals = await poolContract.methods.decimals().call();
     const totalSupply =
-      (await totalSupplyPool) / Math.pow(10, totalSupplyDecimals);
+     new BigNumber(await totalSupplyPool).div(new BigNumber(Math.pow(10, totalSupplyDecimals)));
     //getting total number of eth and tru
     const ethDecimals = await ethContract.methods.decimals().call();
     const truDecimals = await truContract.methods.decimals().call();
     const reserves = await poolContract.methods.getReserves().call();
-    const totalEth = (await reserves[0]) / Math.pow(10, ethDecimals);
-    const totalTru = (await reserves[1]) / Math.pow(10, truDecimals);
+    const totalEth = new BigNumber(await reserves[0]).div(new BigNumber(Math.pow(10, ethDecimals)));
+    const totalTru = new BigNumber(await reserves[1]).div(new BigNumber(Math.pow(10, truDecimals)));
     //calculating total liquidity
     const lpTokenPrice = await calculateLpTokenPrice(
       totalEth,
@@ -94,12 +95,12 @@ async function uniSwap_eth_tru_collector() {
       truPrice,
       totalSupply
     );
-    //console.log(`Eth price ${ethPrice}, Tru price ${truPrice}, LP token price: ${lpTokenPrice}, ${poolAllocationPercent} sushi per block. Sushi allocated to TRU/ETH ${poolSushiRewardPerBlock}. Tru reward per second: ${truRewardPerSecond}`)
+    //console.log(`Eth price ${ethPrice}, Tru price ${truPrice}, LP token price: ${lpTokenPrice}, ${poolAllocationPercent} sushi per block. Sushi allocated to TRU/ETH ${poolSushiRewardPerBlock}. Tru reward per second: ${truRewardPerDay}`)
 
     return {
       poolAllocationPercent,
       poolSushiRewardPerBlock,
-      truRewardPerSecond,
+      truRewardPerDay,
       truPrice,
       ethPrice,
       truEthLpTokenPrice: lpTokenPrice,
