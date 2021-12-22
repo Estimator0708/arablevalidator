@@ -82,7 +82,7 @@ async function pancakswap_cake_bnb_collector() {
     const rewardsPerBlock = await mainFarmContract.methods
       .cakePerBlock()
       .call();
-    const cakeEmissionPerBlock = web3.utils.fromWei(rewardsPerBlock,'ether');
+    const cakeEmissionPerBlock = new BigNumber(rewardsPerBlock).div(new BigNumber(1e18));
     const poolRewardsPerBlock =
       (new BigNumber(poolAllocation).div(new BigNumber(totalAllocPoint))).times(new BigNumber(cakeEmissionPerBlock));
     //console.log(`BNB price ${bnbPrice}. Cake price: ${cakePrice}. Cake allocated to Cake/BNB pool ${poolRewardsPerBlock}.`)

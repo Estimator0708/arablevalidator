@@ -1,29 +1,9 @@
-const {
-  arBNB,
-  arCAKE,
-  arPancakeswapBUSDBNB,
-  arPancakeswapCAKEBNB,
-  arSUSHI,
-  arSOL,
-  arOSMO,
-  arQUICK,
-  arCRV,
-  arRAY,
-  arDOT,
-  arTRU,
-  arOsmosisATOMOSMO,
-  arQuickswapETHUSDC,
-  arQuickswapETHQUICK,
-  arRaydiumRAYSOL,
-  arRaydiumRAYUSDT,
-  arUniswapETHUSDT,
-  arCurveDAIUSDCUSDT,
-  arSushiswapETHTRU,
-} = require('../config/address.js');
+const { getNetwork } = require('../utils/getNetworkId')
 const { setBulkPrice } = require('../utils/setBulkPrice');
 
 async function feedPrices(state) {
   try {
+    const netAddress = await getNetwork();
     const bnbPrice = state.coingecko.prices.binancecoin.usd;
     const cakePrice = state.bsc.pancakeswap.cakeBnb.cakePrice;
     const busdBNBLpPrice =
@@ -53,25 +33,25 @@ async function feedPrices(state) {
     /**user readable price -- end **/
     /**Array of all address**/
     let tokensArray = [
-      arBNB,
-      arCAKE,
-      arPancakeswapBUSDBNB,
-      arPancakeswapCAKEBNB,
-      arSUSHI,
-      arSOL,
-      arOSMO,
-      arQUICK,
-      arRAY,
-      arDOT,
-      arTRU,
-      arCRV,
-      arQuickswapETHUSDC,
-      arQuickswapETHQUICK,
-      arRaydiumRAYSOL,
-      arRaydiumRAYUSDT,
-      arUniswapETHUSDT,
-      arSushiswapETHTRU,
-      arOsmosisATOMOSMO,
+      netAddress.arBNB,
+      netAddress.arCAKE,
+      netAddress.arPancakeswapBUSDBNB,
+      netAddress.arPancakeswapCAKEBNB,
+      netAddress.arSUSHI,
+      netAddress.arSOL,
+      netAddress.arOSMO,
+      netAddress.arQUICK,
+      netAddress.arRAY,
+      netAddress.arDOT,
+      netAddress.arTRU,
+      netAddress.arCRV,
+      netAddress.arQuickswapETHUSDC,
+      netAddress.arQuickswapETHQUICK,
+      netAddress.arRaydiumRAYSOL,
+      netAddress.arRaydiumRAYUSDT,
+      netAddress.arUniswapETHUSDT,
+      netAddress.arSushiswapETHTRU,
+      netAddress.arOsmosisATOMOSMO,
     ];
     /**Array of all address's price**/
     let priceArray = [

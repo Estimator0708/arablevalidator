@@ -1,6 +1,6 @@
 const { waitSeconds } = require('../../submitter/utils/wait');
-const addresses = require('../../submitter/config/address.js');
 const { updateRewardRateSum } = require('../utils/updateRewardRateSum');
+const { getNetwork } = require('../utils/getNetworkId');
 
 function rewardAddresses() {
   return [
@@ -57,11 +57,12 @@ function rewardAddresses() {
 
 exports.updateRewardRateSums = async function () {
   try {
+    const netAddress = await getNetwork();
     const setRewards = rewardAddresses();
     for (let i = 0; i < setRewards.length; i++) {
       const reward = setRewards[i];
       console.log(`setting reward for farmId = ${reward.farmId}`);
-      let addrs = reward.rewardTokenSymbols.map((symbol) => addresses[symbol]);
+      let addrs = reward.rewardTokenSymbols.map((symbol) => netAddress[symbol]);
       await updateRewardRateSum(reward.farmId, addrs.toString());
       await waitSeconds(3);
     }

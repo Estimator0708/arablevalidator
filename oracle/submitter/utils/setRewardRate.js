@@ -1,20 +1,21 @@
 const { setup } = require('./network');
-const { oracle } = require('../config/address.js');
+//const { oracle } = require('../config/fujiAddress.js');
 const { oracle_abi } = require('../abis/oracle_abi');
-
+const { getNetwork } = require('./getNetworkId')
 const web3 = setup();
 
 require('dotenv').config();
 
 
 exports.setRewardRate = async function (farmId, rewardToken, dailyRewardRate) {
+  const netAddress = await getNetwork();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );
   await web3.eth.accounts.wallet.add(account);
   const myAccount = account.address;
   const gasPrice = await web3.eth.getGasPrice();
-  const oracleContract = new web3.eth.Contract(oracle_abi, oracle);
+  const oracleContract = new web3.eth.Contract(oracle_abi, netAddress.oracle);
 
   dailyRewardRate = web3.utils.toHex(
     web3.utils.toWei(`${dailyRewardRate}`, 'ether')

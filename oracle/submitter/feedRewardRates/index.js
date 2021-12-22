@@ -1,8 +1,8 @@
-const addresses = require('../config/address.js');
 const { waitSeconds } = require('../utils/wait');
 const { setRewardRate } = require('../utils/setRewardRate');
 const { setBulkRewardRate } = require('../utils/setBulkRewardRate');
 const { farms } = require('../config');
+const { getNetwork } = require('../utils/getNetworkId');
 
 function convertToFormalRewardRates(state) {
   return [
@@ -69,13 +69,14 @@ function convertToFormalRewardRates(state) {
 
 async function feedRewardRates(state) {
   try {
+    const netAddress = await getNetwork();
     const farmRewardRates = convertToFormalRewardRates(state);
     for (let i = 0; i < farmRewardRates.length; i++) {
       const farm = farmRewardRates[i];
       console.log(
         `submitting farm reward information for farmId=${farm.farmId}`
       );
-      const addrs = farm.rewardTokenSymbols.map((symbol) => addresses[symbol]);
+      const addrs = farm.rewardTokenSymbols.map((symbol) => netAddress[symbol]);
       await setBulkRewardRate(farm.farmId, addrs, farm.rewardRates);
       await waitSeconds(3);
     }
