@@ -1,4 +1,4 @@
-const { setup } = require('../../submitter/utils/network');
+const { setup } = require('../../config/network');
 const { getAddresses } = require('../../config/address');
 const { farm_abi } = require('../abi/farm_abi');
 const web3 = setup();
