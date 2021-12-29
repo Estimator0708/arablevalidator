@@ -288,6 +288,19 @@
     },
     {
       "inputs": [],
+      "name": "getDStakingRewardInfosCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getRemovedDStakingCount",
       "outputs": [
         {
@@ -535,6 +548,24 @@
         }
       ],
       "name": "setDStakingCreationAllowed",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "creators",
+          "type": "address[]"
+        },
+        {
+          "internalType": "bool",
+          "name": "allowed",
+          "type": "bool"
+        }
+      ],
+      "name": "setDStakingCreationsAllowed",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

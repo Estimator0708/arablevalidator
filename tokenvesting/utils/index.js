@@ -149,3 +149,25 @@ exports.getValidators = async function () {
 
   return dstakingInfos;
 };
+
+// stakingRoot.setDStakingCreationsAllowed
+exports.bulkPermitValidatorCreation = async function (addrs) {
+  const account = web3.eth.accounts.privateKeyToAccount(
+    process.env.PRIVATE_KEY
+  );
+  await web3.eth.accounts.wallet.add(account);
+  const myAccount = account.address;
+  const gasPrice = await web3.eth.getGasPrice();
+
+  const stakingContract = new web3.eth.Contract(staking_abi, staking);
+
+  const setDStakingCreationsAllowed =
+    stakingContract.methods.setDStakingCreationsAllowed(addrs, true);
+  const txObj = await setDStakingCreationsAllowed.send({
+    from: myAccount,
+    gasLimit: web3.utils.toHex(300000),
+    gasPrice,
+  });
+  console.log('Success bulkPermitValidatorCreation!', txObj.transactionHash);
+  return txObj.transactionHash;
+};
