@@ -159,10 +159,13 @@ exports.bulkPermitValidatorCreation = async function (addrs) {
   const myAccount = account.address;
   const gasPrice = await web3.eth.getGasPrice();
 
-  const stakingContract = new web3.eth.Contract(staking_abi, staking);
+  const stakingRootContract = new web3.eth.Contract(
+    staking_root_abi,
+    staking_root
+  );
 
   const setDStakingCreationsAllowed =
-    stakingContract.methods.setDStakingCreationsAllowed(addrs, true);
+    stakingRootContract.methods.setDStakingCreationsAllowed(addrs, true);
   const txObj = await setDStakingCreationsAllowed.send({
     from: myAccount,
     gasLimit: web3.utils.toHex(300000),
