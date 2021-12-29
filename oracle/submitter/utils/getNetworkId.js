@@ -1,9 +1,9 @@
 const { setup } = require('./network');
 const testnetAddress = require('../config/fujiAddress');
-const productionAddress = require('../config/mainnetAdress');
+const productionAddress = require('../config/avaxAddress');
 const web3 = setup();
 
-async function getNetwork() {
+async function getAddresses() {
   const id = await web3.eth.getChainId();
   if (id == 43114) {
     console.log('Avax Mainnet: no deployment on mainnet yet');
@@ -17,4 +17,4 @@ async function getNetwork() {
   }
 }
 
-exports.getNetwork = getNetwork;
+exports.getAddresses = getAddresses;

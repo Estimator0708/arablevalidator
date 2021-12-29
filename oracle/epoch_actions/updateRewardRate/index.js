@@ -57,7 +57,7 @@ function rewardAddresses() {
 
 exports.updateRewardRateSums = async function () {
   try {
-    const addresses = await getNetwork();
+    const addresses = await getAddresses();
     const setRewards = rewardAddresses();
     for (let i = 0; i < setRewards.length; i++) {
       const reward = setRewards[i];

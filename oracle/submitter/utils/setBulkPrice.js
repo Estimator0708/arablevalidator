@@ -5,7 +5,7 @@ const { getNetwork } = require('./getNetworkId');
 const web3 = setup();
 
 exports.setBulkPrice = async function (tokenArray, priceArray) {
-  const { oracle } = await getNetwork();
+  const { oracle } = await getAddresses();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );

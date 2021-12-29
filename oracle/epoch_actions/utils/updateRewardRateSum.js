@@ -5,7 +5,7 @@ const web3 = setup();
 require('dotenv').config();
 
 exports.updateRewardRateSum = async function (farmId, rewardToken) {
-  const { farming } = await getNetwork();
+  const { farming } = await getAddresses();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );

@@ -69,7 +69,7 @@ function convertToFormalRewardRates(state) {
 
 async function feedRewardRates(state) {
   try {
-    const addresses = await getNetwork();
+    const addresses = await getAddresses();
     const farmRewardRates = convertToFormalRewardRates(state);
     for (let i = 0; i < farmRewardRates.length; i++) {
       const farm = farmRewardRates[i];

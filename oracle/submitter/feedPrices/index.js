@@ -23,7 +23,7 @@ async function feedPrices(state) {
       arUniswapETHUSDT,
       arSushiswapETHTRU,
       arOsmosisATOMOSMO,
-    } = await getNetwork();
+    } = await getAddresses();
     const bnbPrice = state.coingecko.prices.binancecoin.usd;
     const cakePrice = state.bsc.pancakeswap.cakeBnb.cakePrice;
     const busdBNBLpPrice =

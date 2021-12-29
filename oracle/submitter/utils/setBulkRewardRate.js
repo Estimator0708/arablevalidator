@@ -11,7 +11,7 @@ exports.setBulkRewardRate = async function (
   rewardTokens,
   dailyRewardRates
 ) {
-  const { oracle } = await getNetwork();
+  const { oracle } = await getAddresses();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );
