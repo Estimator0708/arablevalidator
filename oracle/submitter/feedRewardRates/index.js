@@ -1,8 +1,8 @@
-const addresses = require('../config/address.js');
-const { waitSeconds } = require('../utils/wait');
+const { waitSeconds } = require('../../utils/wait');
 const { setRewardRate } = require('../utils/setRewardRate');
 const { setBulkRewardRate } = require('../utils/setBulkRewardRate');
 const { farms } = require('../config');
+const { getAddresses } = require('../../config/address');
 
 function convertToFormalRewardRates(state) {
   return [
@@ -69,6 +69,7 @@ function convertToFormalRewardRates(state) {
 
 async function feedRewardRates(state) {
   try {
+    const addresses = await getAddresses();
     const farmRewardRates = convertToFormalRewardRates(state);
     for (let i = 0; i < farmRewardRates.length; i++) {
       const farm = farmRewardRates[i];

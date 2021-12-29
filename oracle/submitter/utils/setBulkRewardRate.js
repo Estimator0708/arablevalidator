@@ -1,6 +1,6 @@
-const { setup } = require('./network');
-const { oracle } = require('../config/address.js');
+const { setup } = require('../../config/network');
 const { oracle_abi } = require('../abis/oracle_abi');
+const { getAddresses } = require('../../config/address');
 
 const web3 = setup();
 
@@ -11,6 +11,7 @@ exports.setBulkRewardRate = async function (
   rewardTokens,
   dailyRewardRates
 ) {
+  const { oracle } = await getAddresses();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );

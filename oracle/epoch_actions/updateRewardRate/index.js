@@ -1,6 +1,6 @@
-const { waitSeconds } = require('../../submitter/utils/wait');
-const addresses = require('../../submitter/config/address.js');
+const { waitSeconds } = require('../../utils/wait');
 const { updateRewardRateSum } = require('../utils/updateRewardRateSum');
+const { getAddresses } = require('../../config/address');
 
 function rewardAddresses() {
   return [
@@ -57,6 +57,7 @@ function rewardAddresses() {
 
 exports.updateRewardRateSums = async function () {
   try {
+    const addresses = await getAddresses();
     const setRewards = rewardAddresses();
     for (let i = 0; i < setRewards.length; i++) {
       const reward = setRewards[i];

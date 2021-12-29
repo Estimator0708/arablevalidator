@@ -1,29 +1,29 @@
-const {
-  arBNB,
-  arCAKE,
-  arPancakeswapBUSDBNB,
-  arPancakeswapCAKEBNB,
-  arSUSHI,
-  arSOL,
-  arOSMO,
-  arQUICK,
-  arCRV,
-  arRAY,
-  arDOT,
-  arTRU,
-  arOsmosisATOMOSMO,
-  arQuickswapETHUSDC,
-  arQuickswapETHQUICK,
-  arRaydiumRAYSOL,
-  arRaydiumRAYUSDT,
-  arUniswapETHUSDT,
-  arCurveDAIUSDCUSDT,
-  arSushiswapETHTRU,
-} = require('../config/address.js');
+const { getAddresses } = require('../../config/address');
 const { setBulkPrice } = require('../utils/setBulkPrice');
 
 async function feedPrices(state) {
   try {
+    const {
+      arBNB,
+      arCAKE,
+      arPancakeswapBUSDBNB,
+      arPancakeswapCAKEBNB,
+      arSUSHI,
+      arSOL,
+      arOSMO,
+      arQUICK,
+      arRAY,
+      arDOT,
+      arTRU,
+      arCRV,
+      arQuickswapETHUSDC,
+      arQuickswapETHQUICK,
+      arRaydiumRAYSOL,
+      arRaydiumRAYUSDT,
+      arUniswapETHUSDT,
+      arSushiswapETHTRU,
+      arOsmosisATOMOSMO,
+    } = await getAddresses();
     const bnbPrice = state.coingecko.prices.binancecoin.usd;
     const cakePrice = state.bsc.pancakeswap.cakeBnb.cakePrice;
     const busdBNBLpPrice =

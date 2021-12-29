@@ -1,10 +1,11 @@
-const { setup } = require('../../submitter/utils/network');
-const { farming } = require('../../submitter/config/address');
+const { setup } = require('../../config/network');
+const { getAddresses } = require('../../config/address');
 const { farm_abi } = require('../abi/farm_abi');
 const web3 = setup();
 require('dotenv').config();
 
 exports.updateRewardRateSum = async function (farmId, rewardToken) {
+  const { farming } = await getAddresses();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );
