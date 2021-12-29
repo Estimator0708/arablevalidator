@@ -1,4 +1,4 @@
-const { waitSeconds } = require('../utils/wait');
+const { waitSeconds } = require('../../utils/wait');
 const { setRewardRate } = require('../utils/setRewardRate');
 const { setBulkRewardRate } = require('../utils/setBulkRewardRate');
 const { farms } = require('../config');
