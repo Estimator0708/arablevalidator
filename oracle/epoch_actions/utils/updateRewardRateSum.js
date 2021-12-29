@@ -1,5 +1,5 @@
 const { setup } = require('../../submitter/utils/network');
-const { getAddresses } = require('./address');
+const { getAddresses } = require('../../config/address');
 const { farm_abi } = require('../abi/farm_abi');
 const web3 = setup();
 require('dotenv').config();

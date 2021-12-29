@@ -2,7 +2,7 @@ const { waitSeconds } = require('../utils/wait');
 const { setRewardRate } = require('../utils/setRewardRate');
 const { setBulkRewardRate } = require('../utils/setBulkRewardRate');
 const { farms } = require('../config');
-const { getAddresses } = require('../utils/address');
+const { getAddresses } = require('../../config/address');
 
 function convertToFormalRewardRates(state) {
   return [

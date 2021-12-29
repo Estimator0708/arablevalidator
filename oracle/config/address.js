@@ -1,6 +1,6 @@
-const { setup } = require('./network');
+const { setup } = require('../submitter/utils/network');
 const fujiAddresses = require('../config/fujiAddress');
-const avaxAddresses = require('../config/avaxAddress');
+const avaxAddresses = require('./avaxAddress');
 const web3 = setup();
 
 async function getAddresses() {

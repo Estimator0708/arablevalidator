@@ -1,6 +1,6 @@
 const { setup } = require('./network');
 const { oracle_abi } = require('../abis/oracle_abi');
-const { getAddresses } = require('./address');
+const { getAddresses } = require('../../config/address');
 const web3 = setup();
 
 require('dotenv').config();

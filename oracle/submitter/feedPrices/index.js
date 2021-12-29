@@ -1,4 +1,4 @@
-const { getAddresses } = require('../utils/address');
+const { getAddresses } = require('../../config/address');
 const { setBulkPrice } = require('../utils/setBulkPrice');
 
 async function feedPrices(state) {
