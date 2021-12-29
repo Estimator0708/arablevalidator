@@ -1,4 +1,4 @@
-const { waitSeconds } = require('../../utils/wait');
+const { waitSeconds } = require('../../../utils/wait');
 const { updateRewardRateSum } = require('../utils/updateRewardRateSum');
 const { getAddresses } = require('../../config/address');
 
