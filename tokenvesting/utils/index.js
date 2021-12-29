@@ -1,4 +1,4 @@
-const { setup } = require('./network');
+const { setup } = require('../config/network');
 const {
   arable_vesting,
   root_distributer,
