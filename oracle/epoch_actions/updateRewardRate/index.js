@@ -1,6 +1,6 @@
 const { waitSeconds } = require('../../submitter/utils/wait');
 const { updateRewardRateSum } = require('../utils/updateRewardRateSum');
-const { getNetwork } = require('../utils/getNetworkId');
+const { getAddresses } = require('../utils/address');
 
 function rewardAddresses() {
   return [

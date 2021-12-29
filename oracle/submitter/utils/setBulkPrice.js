@@ -1,6 +1,6 @@
 const { setup } = require('./network');
 const { oracle_abi } = require('../abis/oracle_abi');
-const { getNetwork } = require('./getNetworkId');
+const { getAddresses } = require('./address');
 
 const web3 = setup();
 

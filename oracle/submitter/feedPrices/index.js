@@ -1,4 +1,4 @@
-const { getNetwork } = require('../utils/getNetworkId');
+const { getAddresses } = require('../utils/address');
 const { setBulkPrice } = require('../utils/setBulkPrice');
 
 async function feedPrices(state) {
