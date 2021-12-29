@@ -4,12 +4,16 @@ const {
   root_distributer,
   staking,
   staking_root,
+  otc,
 } = require('../config/address.js');
 const arable_vesting_abi = require('../abis/arable_vesting_abi.json');
 const root_distributer_abi = require('../abis/root_distributer_abi');
 const staking_abi = require('../abis/staking_abi');
 const dstaking_abi = require('../abis/dstaking_abi');
 const staking_root_abi = require('../abis/staking_root_abi');
+const otc_abi = require('../abis/otc_abi');
+
+const BigNumber = require('bignumber.js');
 
 const web3 = setup();
 
@@ -172,5 +176,45 @@ exports.bulkPermitValidatorCreation = async function (addrs) {
     gasPrice,
   });
   console.log('Success bulkPermitValidatorCreation!', txObj.transactionHash);
+  return txObj.transactionHash;
+};
+
+// otc.setUserDeal
+exports.setOTCDeal = async function (
+  addr,
+  acreAmount,
+  usdtAmount,
+  expiry,
+  unlockDate
+) {
+  const account = web3.eth.accounts.privateKeyToAccount(
+    process.env.PRIVATE_KEY
+  );
+  await web3.eth.accounts.wallet.add(account);
+  const myAccount = account.address;
+  const gasPrice = await web3.eth.getGasPrice();
+
+  const otcContract = new web3.eth.Contract(otc_abi, otc);
+
+  const acreAmountBN = new BigNumber(acreAmount).multipliedBy(
+    new BigNumber(Math.pow(10, 18))
+  );
+  const usdtAmountBN = new BigNumber(usdtAmount).multipliedBy(
+    new BigNumber(Math.pow(10, 18))
+  );
+
+  const setUserDeal = otcContract.methods.setUserDeal(
+    addr,
+    acreAmountBN,
+    usdtAmountBN,
+    expiry,
+    unlockDate
+  );
+  const txObj = await setUserDeal.send({
+    from: myAccount,
+    gasLimit: web3.utils.toHex(3000000),
+    gasPrice,
+  });
+  console.log('Success setOTCDeal!', txObj.transactionHash);
   return txObj.transactionHash;
 };
