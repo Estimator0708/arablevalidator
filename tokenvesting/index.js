@@ -30,10 +30,15 @@ async function runTokenVesting() {
   await waitSeconds(10);
 
   // - DStaking.claimRewardsFromRoot - all the validator - daily - any user (after release)
-  const dStakingInfos = await getValidators();
-  for (let i = 0; i < dStakingInfos.length; i++) {
-    await dstakingReleaseFromStakingRoot(dStakingInfos[i].addr);
+  if (process.env.VALIDATOR_ADDRESS) {
+    await dstakingReleaseFromStakingRoot(process.env.VALIDATOR_ADDRESS);
     await waitSeconds(5);
+  } else {
+    const dStakingInfos = await getValidators();
+    for (let i = 0; i < dStakingInfos.length; i++) {
+      await dstakingReleaseFromStakingRoot(dStakingInfos[i].addr);
+      await waitSeconds(5);
+    }
   }
   console.log('================ finished token vesting flow ================');
 }

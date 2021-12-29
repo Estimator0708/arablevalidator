@@ -14,7 +14,7 @@ Get a Ubuntu server first and do the followings:
 - Install pm2
   `npm install -g pm2`
 
-- Go inside arablevalidator and config env
+- Go inside arablevalidator and config environment
   `cd ./arablevalidator`
   `cp env.example .env`
 - Open .env file and config privateKey and save.
