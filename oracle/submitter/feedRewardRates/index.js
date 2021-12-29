@@ -69,14 +69,14 @@ function convertToFormalRewardRates(state) {
 
 async function feedRewardRates(state) {
   try {
-    const netAddress = await getNetwork();
+    const addresses = await getNetwork();
     const farmRewardRates = convertToFormalRewardRates(state);
     for (let i = 0; i < farmRewardRates.length; i++) {
       const farm = farmRewardRates[i];
       console.log(
         `submitting farm reward information for farmId=${farm.farmId}`
       );
-      const addrs = farm.rewardTokenSymbols.map((symbol) => netAddress[symbol]);
+      const addrs = farm.rewardTokenSymbols.map((symbol) => addresses[symbol]);
       await setBulkRewardRate(farm.farmId, addrs, farm.rewardRates);
       await waitSeconds(3);
     }

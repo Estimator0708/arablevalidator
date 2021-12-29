@@ -5,14 +5,14 @@ const { getNetwork } = require('./getNetworkId');
 const web3 = setup();
 
 exports.setBulkPrice = async function (tokenArray, priceArray) {
-  const netAddress = await getNetwork();
+  const { oracle } = await getNetwork();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );
   await web3.eth.accounts.wallet.add(account);
   const myAccount = account.address;
   const gasPrice = await web3.eth.getGasPrice();
-  const oracleContract = new web3.eth.Contract(oracle_abi, netAddress.oracle);
+  const oracleContract = new web3.eth.Contract(oracle_abi, oracle);
   priceArray = priceArray.map((price) =>
     web3.utils.toHex(web3.utils.toWei(`${price}`, 'ether'))
   );
