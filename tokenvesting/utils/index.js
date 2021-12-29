@@ -168,7 +168,7 @@ exports.bulkPermitValidatorCreation = async function (addrs) {
     stakingRootContract.methods.setDStakingCreationsAllowed(addrs, true);
   const txObj = await setDStakingCreationsAllowed.send({
     from: myAccount,
-    gasLimit: web3.utils.toHex(300000),
+    gasLimit: web3.utils.toHex(3000000),
     gasPrice,
   });
   console.log('Success bulkPermitValidatorCreation!', txObj.transactionHash);
