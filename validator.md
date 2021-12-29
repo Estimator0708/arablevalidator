@@ -17,7 +17,7 @@ Get a Ubuntu server first and do the followings:
 - Go inside arablevalidator and config environment
   `cd ./arablevalidator`
   `cp env.example .env`
-- Open .env file and config privateKey and save.
+- Open `.env` file and config privateKey, validator address and save - here you can put any private key that has AVAX balance.
   `nano .env`
 - start pm2
   `pm2 start npm -- run tokenvesting --`
