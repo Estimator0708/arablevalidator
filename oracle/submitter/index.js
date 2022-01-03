@@ -3,7 +3,7 @@ const { feedRewardRates } = require('./feedRewardRates');
 const { state } = require('../state');
 
 async function feed(state) {
- // await feedPrices(state);
+  // await feedPrices(state);
   await feedRewardRates(state);
 }
 

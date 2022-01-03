@@ -1,7 +1,6 @@
-const { setup } = require('../../test');
-//const { oracle } = require('../config/fujiAddress.js');
+const { setup } = require('../../config/network');
 const { oracle_abi } = require('../abis/oracle_abi');
-const { getNetwork } = require('./getNetworkId')
+const { getAddresses } = require('../../config/address');
 
 const web3 = setup();
 
@@ -12,14 +11,14 @@ exports.setBulkRewardRate = async function (
   rewardTokens,
   dailyRewardRates
 ) {
-  const netAddress = await getNetwork();
+  const { oracle } = await getAddresses();
   const account = web3.eth.accounts.privateKeyToAccount(
     process.env.PRIVATE_KEY
   );
   await web3.eth.accounts.wallet.add(account);
   const myAccount = account.address;
   const gasPrice = await web3.eth.getGasPrice();
-  const oracleContract = new web3.eth.Contract(oracle_abi, netAddress.oracle);
+  const oracleContract = new web3.eth.Contract(oracle_abi, oracle);
 
   // cut decimals if too low
   dailyRewardRates = dailyRewardRates.map((rate) =>
