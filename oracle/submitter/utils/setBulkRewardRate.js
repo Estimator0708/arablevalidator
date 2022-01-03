@@ -1,4 +1,4 @@
-const { setup } = require('./network');
+const { setup } = require('../../test');
 //const { oracle } = require('../config/fujiAddress.js');
 const { oracle_abi } = require('../abis/oracle_abi');
 const { getNetwork } = require('./getNetworkId')
