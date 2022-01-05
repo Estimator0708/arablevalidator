@@ -54,3 +54,9 @@ Get a Ubuntu server first and do the followings:
   git pull
   pm2 restart 0
   ```
+
+Notes:
+
+- A validator should take care of the account for script execution is not out of AVAX balance
+- The account for script execution is recommended to not have big amount of AVAX balance for security
+- A validator should take care of the server security
