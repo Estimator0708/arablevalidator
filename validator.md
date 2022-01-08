@@ -62,6 +62,6 @@ pm2 stop 0
 # Notes:
 
 - The validator script performs transactions on the Avalanche network. Make sure to keep an AVAX balance in your account to cover transaction costs.
-- It is recommended to only hold a small balance of AVAX in the account for security reasons.
+- For security reasons, keep only a small balance of AVAX in the account.
 - As a validator, you are responsible for keeping your server secure.
 
