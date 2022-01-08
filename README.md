@@ -8,7 +8,7 @@ To participate as a validator, you need to apply via the [Validator submission f
 Once you are approved, create a validator via [Arable protocol app](https://app.arablefi.com/admin/validator).
 
 ### Validator setup
-To get the validator script up and running, follow [these instructions](https://github.com/ArableProtocol/arablevalidator/blob/main/validator.md).
+To get the validator script up and running, follow [these instructions](https://github.com/ArableProtocol/arablevalidator/blob/main/validator.md). Running the validator script is required to collect any rewards.
 
 ## Install dependencies
 
