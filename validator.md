@@ -32,7 +32,7 @@ Navigate to the `arablevalidator` directory and duplicate the example configurat
 cp env.example .env
 ```
 
-Open `.env` in your favorite editor and set your private key as the value for `PRIVATE_KEY.` Make sure the wallet contains some AVAX to cover any transaction fees generated when running the validator. The private key is never transmitted outside of the server.
+Open `.env` in your favorite editor and set your private key as the value for `PRIVATE_KEY.` Make sure the account contains enough AVAX to cover any transaction fees generated when running the validator. The private key is never transmitted outside of the server.
 ```
 nano .env
 ```
