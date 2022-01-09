@@ -21,7 +21,7 @@ npm install -g pm2
 Clone the validator project and install required npm dependencies:
 
 ```
-git clone git@github.com:ArableProtocol/arablevalidator.git
+git clone https://github.com/ArableProtocol/arablevalidator
 cd ./arablevalidator
 npm install
 ```
