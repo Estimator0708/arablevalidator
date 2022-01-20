@@ -13,3 +13,11 @@ exports.setup = function () {
   }
   return new Web3(fuji_url);
 };
+
+exports.getBackendApiUrl = function () {
+  const network = getNetwork();
+  if (network == 'avax') {
+    return 'https://';
+  }
+  return 'http://localhost:3800/api';
+};

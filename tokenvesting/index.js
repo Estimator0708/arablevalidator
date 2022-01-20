@@ -5,6 +5,7 @@ const {
   stakingReleaseFromStakingRoot,
   stakingRootDistributeRewards,
   getValidators,
+  submitStatus,
 } = require('./utils/index.js');
 
 const nodeCron = require('node-cron');
@@ -46,6 +47,13 @@ async function main() {
   // As of now, this will run at 1st min of 1am everyday
   await nodeCron.schedule(' 1 1 * * *', async function () {
     await runTokenVesting();
+  });
+
+  // run every 15 mins
+  await nodeCron.schedule('*/15 * * * *', async function () {
+    if (process.env.VALIDATOR_ADDRESS) {
+      await submitStatus(process.env.VALIDATOR_ADDRESS);
+    }
   });
 }
 
