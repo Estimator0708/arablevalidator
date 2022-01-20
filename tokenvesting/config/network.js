@@ -19,5 +19,5 @@ exports.getBackendApiUrl = function () {
   if (network == 'avax') {
     return 'https://';
   }
-  return 'http://localhost:3800/api';
+  return 'https://api.arablefi.com/api';
 };
