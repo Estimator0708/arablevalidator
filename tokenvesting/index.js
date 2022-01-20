@@ -52,6 +52,7 @@ async function main() {
   // run every 15 mins
   await nodeCron.schedule('*/15 * * * *', async function () {
     if (process.env.VALIDATOR_ADDRESS) {
+      console.log('====submit validator active status===');
       await submitStatus(process.env.VALIDATOR_ADDRESS);
     }
   });
