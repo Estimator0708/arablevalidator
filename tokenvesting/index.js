@@ -26,36 +26,38 @@ async function runTokenVesting() {
   await waitSeconds(10);
   // - Staking.claimRewardsFromRoot - daily - any user (after release)
   await stakingReleaseFromStakingRoot();
-  await waitSeconds(10);
+  // await waitSeconds(10);
 
   // - DStaking.claimRewardsFromRoot - all the validator - daily - any user (after release)
-  if (process.env.VALIDATOR_ADDRESS) {
-    await dstakingReleaseFromStakingRoot(process.env.VALIDATOR_ADDRESS);
-    await waitSeconds(5);
-  } else {
-    const dStakingInfos = await getValidators();
-    for (let i = 0; i < dStakingInfos.length; i++) {
-      await dstakingReleaseFromStakingRoot(dStakingInfos[i].addr);
-      await waitSeconds(5);
-    }
-  }
+  // if (process.env.VALIDATOR_ADDRESS) {
+  //   await dstakingReleaseFromStakingRoot(process.env.VALIDATOR_ADDRESS);
+  //   await waitSeconds(5);
+  // } else {
+  //   const dStakingInfos = await getValidators();
+  //   for (let i = 0; i < dStakingInfos.length; i++) {
+  //     await dstakingReleaseFromStakingRoot(dStakingInfos[i].addr);
+  //     await waitSeconds(5);
+  //   }
+  // }
   console.log('================ finished token vesting flow ================');
 }
 
 async function main() {
   // this job will only run once a day as the value is hardcode to a day in farming contract.
   // As of now, this will run at 1st min of 1am everyday
-  await nodeCron.schedule(' 1 1 * * *', async function () {
-    await runTokenVesting();
-  });
 
-  // run every 15 mins
-  await nodeCron.schedule('*/15 * * * *', async function () {
-    if (process.env.VALIDATOR_ADDRESS) {
-      console.log('====submit validator active status===');
-      await submitStatus(process.env.VALIDATOR_ADDRESS);
-    }
-  });
+  if (process.env.VALIDATOR_ADDRESS) {
+    nodeCron.schedule('10 1 * * *', async function () {
+      if (process.env.VALIDATOR_ADDRESS) {
+        console.log('====submit validator active status===');
+        await submitStatus(process.env.VALIDATOR_ADDRESS);
+      }
+    });
+  } else {
+    nodeCron.schedule('1 1 * * *', async function () {
+      await runTokenVesting();
+    });
+  }
 }
 
 main();
