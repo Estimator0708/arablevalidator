@@ -22,6 +22,7 @@ async function runTokenVesting() {
     // - ArableVesting.release - daily - any user
     const isReleasable = await releaseVesting();
     if (isReleasable) {
+      console.log('====handle release from all====');
       await waitSeconds(10);
       // - RootDistributer.releaseToMemberAll - daily - any user (after release)
       await rootDistributerReleaseAll();
