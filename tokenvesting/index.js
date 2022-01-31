@@ -14,19 +14,26 @@ require('dotenv').config();
 
 async function runTokenVesting() {
   console.log('================ starting token vesting flow ================');
-  // TODO: If already claimed for the epoch, not claim again to reduce gas price
-  // - ArableVesting.release - daily - any user
-  await releaseVesting();
-  await waitSeconds(10);
-  // - RootDistributer.releaseToMemberAll - daily - any user (after release)
-  await rootDistributerReleaseAll();
-  await waitSeconds(10);
-  // - StakingRoot.distributeRewards - daily - any user (after release)
-  await stakingRootDistributeRewards();
-  await waitSeconds(10);
-  // - Staking.claimRewardsFromRoot - daily - any user (after release)
-  await stakingReleaseFromStakingRoot();
-  // await waitSeconds(10);
+
+  if (process.env.VALIDATOR_ADDRESS) {
+    await dstakingReleaseFromStakingRoot(process.env.VALIDATOR_ADDRESS);
+  } else {
+    // TODO: If already claimed for the epoch, not claim again to reduce gas price
+    // - ArableVesting.release - daily - any user
+    const isReleasable = await releaseVesting();
+    if (isReleasable) {
+      await waitSeconds(10);
+      // - RootDistributer.releaseToMemberAll - daily - any user (after release)
+      await rootDistributerReleaseAll();
+      await waitSeconds(10);
+      // - StakingRoot.distributeRewards - daily - any user (after release)
+      await stakingRootDistributeRewards();
+      await waitSeconds(10);
+      // - Staking.claimRewardsFromRoot - daily - any user (after release)
+      await stakingReleaseFromStakingRoot();
+      // await waitSeconds(10);
+    }
+  }
 
   // - DStaking.claimRewardsFromRoot - all the validator - daily - any user (after release)
   // if (process.env.VALIDATOR_ADDRESS) {
@@ -47,14 +54,20 @@ async function main() {
   // As of now, this will run at 1st min of 1am everyday
 
   if (process.env.VALIDATOR_ADDRESS) {
-    nodeCron.schedule('10 1 * * *', async function () {
+    nodeCron.schedule('0 2 * * *', async function () {
       if (process.env.VALIDATOR_ADDRESS) {
-        console.log('====submit validator active status===');
+        console.log(
+          `==validator vesting at ${new Date().toString()} == validator addr: ${
+            process.env.VALIDATOR_ADDRESS
+          }`
+        );
+        await runTokenVesting();
         await submitStatus(process.env.VALIDATOR_ADDRESS);
       }
     });
   } else {
-    nodeCron.schedule('1 1 * * *', async function () {
+    nodeCron.schedule('0 1 * * *', async function () {
+      console.log(`==validator vesting at ${new Date().toString()} ==`);
       await runTokenVesting();
     });
   }
